@@ -75,6 +75,7 @@ class Queue
 {
 public:
 
+
 	void Push(int x)
 	{
 		A.Push(x);
@@ -117,12 +118,6 @@ private:
 class Date
 {
 public:
-	/*Date()
-	{
-		_day = 0;
-		_month = 0;
-		_year = 0;
-	}*/
 	
 	Date(int year = 2023, int month = 10, int day = 14)
 	{
@@ -193,13 +188,41 @@ public:
 		return *this;
 	}
 
+	/*bool operator < (const Date b)
+	{
+		if (_year < b._year) 
+		{
+			return true;
+		}
+		else if(_year == b._year && _month < b._month)
+		{
+			return true;
+		}
+		else if (_year == b._year && _month == b._month && _day < b._day)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+	}*/
+
+	bool operator < (const Date b)
+	{
+		return _year < b._year
+			|| (_year == b._year && _month < b._month)
+			|| (_year == b._year && _month == b._month && _day < b._day);
+	}
+
 	void Printf()
 	{
 		cout << _year << "Äê" << _month << "ÔÂ" << _day << "ÈÕ" << endl;
 	}
 private:
-	int _year;
-	int _month;
-	int _day;
+	int _year = 2023;
+	int _month = 10;
+	int _day = 15;
 };
 
