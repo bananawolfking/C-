@@ -16,7 +16,7 @@ public:
 			exit(-1);
 		}
 		_size = 0;
-		_capacity = 4;
+		_capacity = n;
 		cout << "Stack" << endl;
 	}
 
@@ -26,6 +26,24 @@ public:
 		_a = nullptr;
 		_size = _capacity = 0;
 		cout << "~Stack" << endl;
+	}
+
+	Stack(const Stack& x)
+	{
+		_size = x._size;
+		_capacity = x._capacity;
+		
+		_a = (int*)malloc(sizeof(int) * _capacity);
+		if (_a == nullptr)
+		{
+			perror("malloc error");
+			exit(-1);
+		}
+		for (int i = 0; i <_size; ++i)
+		{
+			_a[i] = x._a[i];
+		}
+		cout << "kaobeiStack" << endl;
 	}
 
 	void Push(int x)
@@ -220,9 +238,15 @@ public:
 	{
 		cout << _year << "Äê" << _month << "ÔÂ" << _day << "ÈÕ" << endl;
 	}
-private:
+//private:
 	int _year = 2023;
 	int _month = 10;
 	int _day = 15;
 };
 
+bool operator==(const Date& x, const Date& y)
+{
+	return x._year == y._year
+		&& x._month == y._month
+		&& x._day == y._day;
+}

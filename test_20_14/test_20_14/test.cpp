@@ -128,13 +128,43 @@
 //}
 
 
+//int main()
+//{
+//	Date a;
+//	Date b(2023, 1, 1);
+//	a.Printf();
+//	b.Printf();
+//	cout << (b <a) << endl;
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	Queue Q ;
+//
+//	Q.Push(1);
+//	Q.Push(2);
+//	Q.Push(3);
+//	Q.Push(4);
+//	cout << Q.Pop() << endl;
+//	Q.Push(1);
+//	Q.Push(2);
+//	Queue a = Q;
+//	Q.Print();
+//	a.Print();
+//
+//	return 0;
+//}
+
+
 int main()
 {
 	Date a;
-	Date b(2023, 1, 1);
-	a.Printf();
-	b.Printf();
-	cout << (b <a) << endl;
-
+	Date b = a;
+	a == b;
+	operator==(a, b);
+	a < b;
+	a.operator<(b);
 	return 0;
 }
