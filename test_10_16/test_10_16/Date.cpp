@@ -38,9 +38,12 @@ Date::Date(const Date& x)
 
 Date& Date::operator=(const Date x)
 {
-	_year = x._year;
-	_month = x._month;
-	_day = x._day;
+	if (this != &x)
+	{
+		_year = x._year;
+		_month = x._month;
+		_day = x._day;
+	}
 
 	return *this;
 }

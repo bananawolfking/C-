@@ -1,4 +1,7 @@
-﻿  test.cpp
+﻿  Slist.cpp
 D:\VS2022\code\c++-learning\test_10_17\test_10_17\Func.h(178,3): warning C4804: “<”: 在操作中使用类型“bool”不安全
-D:\VS2022\code\c++-learning\test_10_17\test_10_17\Func.h(495): warning C4715: “Slist::Find”: 不是所有的控件路径都返回值
+  test.cpp
+D:\VS2022\code\c++-learning\test_10_17\test_10_17\Func.h(178,3): warning C4804: “<”: 在操作中使用类型“bool”不安全
+  正在生成代码...
+D:\VS2022\code\c++-learning\test_10_17\test_10_17\Slist.cpp(182): warning C4715: “Slist::Find”: 不是所有的控件路径都返回值
   test_10_17.vcxproj -> D:\VS2022\code\c++-learning\test_10_17\Debug\test_10_17.exe

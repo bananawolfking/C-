@@ -156,7 +156,7 @@ public:
 		assert(0 < month < 13);
 
 		int day[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
-		if (year % 4 == 0 && year % 400 == 0 && year % 100 != 0)
+		if (year % 4 == 0 && (year % 400 == 0 || year % 100 != 0))
 		{
 			day[2]++;
 		}
@@ -250,3 +250,63 @@ bool operator==(const Date& x, const Date& y)
 		&& x._month == y._month
 		&& x._day == y._day;
 }
+
+//class Date
+//{
+//public:
+//
+//	Date(int year = 2023, int month = 10, int day = 14)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//
+//	bool operator < (const Date b)
+//	{
+//		return _year < b._year
+//			|| (_year == b._year && _month < b._month)
+//			|| (_year == b._year && _month == b._month && _day < b._day);
+//	}
+//
+//	void Printf()
+//	{
+//		cout << _year << "年" << _month << "月" << _day << "日" << endl;
+//	}
+//	//private:
+//	int _year = 2023;
+//	int _month = 10;
+//	int _day = 15;
+//};
+//
+//bool operator==(const Date& x, const Date& y)
+//{
+//	return x._year == y._year
+//		&& x._month == y._month
+//		&& x._day == y._day;
+//}
+
+//class Date
+//{
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//// 赋值运算符重载成全局函数，注意重载成全局函数时没有this指针了，需要给两个参数
+//Date& operator=(Date& left, const Date& right)
+//{
+//	if (&left != &right)
+//	{
+//		left._year = right._year;
+//		left._month = right._month;
+//		left._day = right._day;
+//	}
+//	return left;
+//}
