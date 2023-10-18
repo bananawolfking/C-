@@ -86,6 +86,11 @@ bool Date::operator>=(const Date x)
 
 Date& Date::operator+=(int x)
 {
+	if (x < 0)
+	{
+		*this -= -x;
+		return *this;
+	}
 	_day += x;
 	int monthday = 0;
 	while (_day > (monthday = MonthDay(_year, _month)))
@@ -111,8 +116,14 @@ Date Date::operator+(int x)
 
 Date& Date::operator-=(int x)
 {
+	if (x < 0)
+	{
+		*this += -x;
+		return *this;
+	}
+
 	_day -= x;
-	while (_day < 0)
+	while (_day <= 0)
 	{
 		_month--;
 		if (_month == 0)
@@ -248,4 +259,11 @@ Date Date::operator--(int)
 void Date::Print()
 {
 	cout << _year << "/" << _month << "/" << _day << endl;
+}
+
+
+ostream& operator<<(ostream& out,const Date& x)
+{
+	out << x._year << "/" << x._month << "/" << x._day;
+	return out;
 }

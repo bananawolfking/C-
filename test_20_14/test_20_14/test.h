@@ -93,6 +93,10 @@ class Queue
 {
 public:
 
+	Queue()
+	{
+
+	}
 
 	void Push(int x)
 	{

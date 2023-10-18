@@ -1,3 +1,3 @@
 ﻿  test.cpp
-D:\VS2022\code\c++-learning\test_10_16\test_10_16\Date.h(1,1): warning C4828: 文件包含在偏移 0x835 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
+D:\VS2022\code\c++-learning\test_10_16\test_10_16\Date.h(1,1): warning C4828: 文件包含在偏移 0x86f 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
   test_10_16.vcxproj -> D:\VS2022\code\c++-learning\test_10_16\x64\Debug\test_10_16.exe

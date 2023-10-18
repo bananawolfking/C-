@@ -223,11 +223,22 @@
 //	return 0;
 //}
 
+//int main()
+//{
+//	Date a;
+//	a.Printf();
+//	a.DaysAfter(5000);
+//	a.Printf();
+//	return 0;
+//}
+
+
 int main()
 {
-	Date a;
-	a.Printf();
-	a.DaysAfter(5000);
-	a.Printf();
+	Queue a;
+	a.Push(1);
+	a.Push(1);
+	a.Push(1);
+	a.Print();
 	return 0;
 }
