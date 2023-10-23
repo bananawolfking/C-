@@ -1,6 +1,6 @@
 #include"Date.h"
 
-int Date::MonthDay(int year, int month)
+int Date::MonthDay(int year, int month) const
 {
 	assert(0 < month < 13);
 
@@ -48,38 +48,38 @@ Date& Date::operator=(const Date x)
 	return *this;
 }
 
-bool Date::operator==(const Date x)
+bool Date::operator==(const Date x) const
 {
 	return _year == x._year
 		&& _month == x._month
 		&& _day == x._day;
 }
 
-bool Date::operator!=(const Date x)
+bool Date::operator!=(const Date x) const
 {
 	return _year != x._year
 		|| _month != x._month
 		|| _day != x._day;
 }
 
-bool Date::operator<(const Date x)
+bool Date::operator<(const Date x) const
 {
 	return _year < x._year
 		|| _year == x._year && _month < x._month
 		|| _year == x._year && _month == x._month && _day < x._day;
 }
 
-bool Date::operator<=(const Date x)
+bool Date::operator<=(const Date x) const
 {
 	return *this < x || *this == x;
 }
 
-bool Date::operator>(const Date x)
+bool Date::operator>(const Date x) const
 {
 	return !(*this <= x);
 }
 
-bool Date::operator>=(const Date x)
+bool Date::operator>=(const Date x) const
 {
 	return *this > x || *this == x;
 }
@@ -107,7 +107,7 @@ Date& Date::operator+=(int x)
 }
 
 
-Date Date::operator+(int x)
+Date Date::operator+(int x) const
 {
 	Date copy = *this;
 	copy += x;
@@ -136,14 +136,14 @@ Date& Date::operator-=(int x)
 	return *this;
 }
 
-Date Date::operator-(int x)
+Date Date::operator-(int x) const
 {
 	Date copy = *this;
 	copy -= x;
 	return copy;
 }
 
-int Date::operator-(const Date& x)//传统计算差值的实现，不好理解，但效率高
+int Date::operator-(const Date& x) const//传统计算差值的实现，不好理解，但效率高
 {
 	int ret = 0;
 	int flag = 1;
@@ -232,7 +232,7 @@ Date Date::operator--(int)
 	return copy;
 }
 
-//int Date::operator-(const Date& x)//追赶的思想，方便理解，但效率不如上面的
+//int Date::operator-(const Date& x) const//追赶的思想，方便理解，但效率不如上面的
 //{
 //	int ret = 0;
 //	int flag = 1;
@@ -256,7 +256,7 @@ Date Date::operator--(int)
 //}
 
 
-void Date::Print()
+void Date::Print() const
 {
 	cout << _year << "/" << _month << "/" << _day << endl;
 }
@@ -266,4 +266,10 @@ ostream& operator<<(ostream& out,const Date& x)
 {
 	out << x._year << "/" << x._month << "/" << x._day;
 	return out;
+}
+
+istream& operator>>(istream& in, Date& x)
+{
+	in >> x._year >> x._month >> x._day;
+	return in;
 }

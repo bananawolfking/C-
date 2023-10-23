@@ -27,8 +27,17 @@ void test1()
 	cout << "ÎÒÕæNB" << endl;
 }
 
+void test2()
+{
+	Date a;
+	cout << a << endl;
+
+	cin >> a;
+	cout << a << endl;
+}
+
 int main()
 {
-	test1();
+	test2();
 	return 0;
 }
