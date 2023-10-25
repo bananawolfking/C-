@@ -1,32 +1,21 @@
 //#include<iostream>
 //using namespace std;
+#include"Date.h"
 
 //class A
 //{
 //public:
-//	A(int i = 0)
-//	{
-//		count++;
-//	}
-//	A(const A& x)
-//	{
-//		count++;
-//	}
+//	A(int i = 0)	{count++;}
+//	A(const A& x)	{count++;}
 ////private:
 //	static int count;
 //	int i = 0;
 //};
 //int A::count = 0;
 //
-//void func(A& x)
-//{}
-//
 //int main()
 //{
 //	A a(1);
-//	A b = a;
-//	A c = 1;
-//	func(a);
 //	cout << A::count << endl;
 //	//cout << A::i << endl;
 //	A* p = nullptr;
@@ -60,7 +49,7 @@
 //	int _day;
 //};
 
-#include"Date.h"
+
 
 //int main()
 //{
@@ -135,25 +124,233 @@
 
 
 
+//class A
+//{
+//public:
+//	A() { ++_scount; }
+//
+//	A(const A& t) { ++_scount; }
+//
+//	static int GetACount() { return _scount; }
+//private:
+//	static int _scount;
+//};
+//
+//int A::_scount = 0;
+//
+//int main()
+//{
+//	cout << A::GetACount() << endl;
+//	A a1, a2;
+//	A a3(a1);
+//	cout << A::GetACount() << endl;
+//	return 0;
+//}
+
+
+//class A
+//{
+//public:
+//	A()	{count++;}
+//
+//	A(const A& x)	{count++;}
+//
+//	int Get()//非静态成员函数可以调用静态成员函数
+//	{
+//		return GetCount();
+//	}
+//
+//	static int GetCount()	{return count;}
+//private:
+//	static int count;
+//};
+//
+//int A::count = 0;
+//
+//int main()
+//{
+//	A a;
+//	cout << a.GetCount() << endl;
+//	cout << A().GetCount() << endl;
+//	cout << A::GetCount() << endl;
+//	cout << a.Get() << endl;
+//
+//	return 0;
+//}
+
+
+
+//class Date
+//{
+//	friend ostream& operator<<(ostream& _cout, const Date& d);
+//	friend istream& operator>>(istream& _cin, Date& d);
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//		: _year(year)
+//		, _month(month)
+//		, _day(day)
+//	{}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//ostream& operator<<(ostream& _cout, const Date& d)
+//{
+//	_cout << d._year << "-" << d._month << "-" << d._day;
+//	return _cout;
+//}
+//istream& operator>>(istream& _cin, Date& d)
+//{
+//	_cin >> d._year;
+//	_cin >> d._month;
+//	_cin >> d._day;
+//	return _cin;
+//}
+//int main()
+//{
+//	Date d;
+//	cin >> d;
+//	cout << d << endl;
+//	return 0;
+//}
+
+
+//class Time
+//{
+//    friend class Date;
+//    // 声明日期类为时间类的友元类，则在日期类中就直接访问Time类中的私有成员变量
+//public:
+//    Time(int hour = 0, int minute = 0, int second = 0)
+//        : _hour(hour)
+//        , _minute(minute)
+//        , _second(second)
+//    {}
+//private:
+//    int _hour;
+//    int _minute;
+//    int _second;
+//};
+//
+//class Date
+//{
+//public:
+//    Date(int year = 1900, int month = 1, int day = 1)
+//        :
+//        _year(year),
+//        _month(month),
+//        _day(day)
+//    {}
+//
+//    void SetTimeOfDate(int hour, int minute, int second)
+//    {
+//        // 直接访问时间类私有的成员变量
+//        _t._hour = hour;
+//        _t._minute = minute;
+//        _t._second = second;
+//    }
+//private:
+//    int _year;
+//    int _month;
+//    int _day;
+//    Time _t;
+//};
+
+//
+//class Solution {
+//public:
+//    int Sum_Solution(int n) {
+//        //...
+//        return n;
+//    }
+//};
+//
+//int main()
+//{
+//    cout << Solution().Sum_Solution(10) << endl;
+//    return 0;
+//}
+
+
 class A
 {
 public:
-	A() { ++_scount; }
+	A(int n = 0)
+		:_a(n)
+	{
+		cout << "A(int n)" << endl;
+	}
 
-	A(const A& t) { ++_scount; }
+	/*~A()
+	{
+		cout << "~A()" << endl;
+	}*/
 
-	static int GetACount() { return _scount; }
+	A(const A& x)
+		:_a(x._a)
+	{
+		cout << "A(const A& x)" << endl;
+	}
+
+	A& operator=(const A& x)
+	{
+		_a = x._a;
+
+		cout << "A& operator=(const A& x)" << endl;
+		return *this;
+	}
+
 private:
-	static int _scount;
+	int _a;
 };
 
-int A::_scount = 0;
+void func1(A a1){}
+
+A func2()
+{
+	return 1;
+}
+
+
+A func3()
+{
+	return A(1);
+}
+
+A func4()
+{
+	A temp(1);
+	int a = 0;
+	return temp;
+}
 
 int main()
 {
-	cout << A::GetACount() << endl;
-	A a1, a2;
-	A a3(a1);
-	cout << A::GetACount() << endl;
+	////隐式类型转换
+	//A b = 1;// 1 -> A类型定义构造函数 temp(1) -> b赋值构造
+	//cout << "------------------------------" << endl;
+	////等价于
+	//A temp(1);
+	//A d = temp;
+
+	//func1(1);//隐形类型转换构造+拷贝构造
+	//cout << "------------------------------" << endl;
+	//func1(A(1));//构造+拷贝构造
+	//cout << "------------------------------" << endl;
+	//A temp(1);
+	//func1(temp);
+
+	func4();//隐形类型转换构造+拷贝构造
+	cout << "------------------------------" << endl;
+	A ref1 = func2();//隐形类型转换构造+拷贝构造+拷贝构造
+	cout << "------------------------------" << endl;
+	A ref2 = func3(); //构造 + 拷贝构造 + 拷贝构造
+	cout << "------------------------------" << endl;
+	A ref3 = func4(); //构造 + 拷贝构造 + 拷贝构造
+
+
 	return 0;
 }
+
+
+
