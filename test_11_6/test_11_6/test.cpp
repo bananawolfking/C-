@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+
 using namespace std;
 
 bool IsLetter(char ch)
@@ -97,13 +98,102 @@ string addStrings(string& num1, string& num2) {
     return str;
 }
 
+
+
+
+//int main()
+//{
+//    //string str = "ab-cd";
+//    //reverseOnlyLetters(str);
+//    string num1 = "123";
+//    string num2 = "12";
+//    string ret = addStrings(num1, num2);
+//    cout << ret << endl;
+//	return 0;
+//}
+
+
+
+namespace kele
+{
+    class string
+    {
+    public:
+        string(const char* str = "")
+            :_size(strlen(str))
+        {
+            _capacity = _size;
+            _str = new char[_size + 1];
+            strcpy(_str, str);
+        }
+
+        string(const string& str)
+            :_size(str._size),
+            _capacity(str._capacity)
+        {
+            _str = new char[_size + 1];
+            strcpy(_str, str._str);
+        }
+
+        //string& operator=(const string& str)
+        //{
+        //    _size = str._size;
+        //    if (_capacity < str._capacity)
+        //    {
+        //        _capacity = str._capacity;
+        //        char* temp = (char*)realloc(_str, _capacity + 1);
+        //        if (temp == nullptr)
+        //        {
+        //            perror("relloc fail");
+        //            exit(-1);
+        //        }
+        //        _str = temp;
+        //    }
+        //    strcpy(_str, str._str);
+        //    //memcpy(_str, str._str, _size + 1);
+        //    return *this;
+        //}
+
+        string& operator=(const string& str)
+        {
+            if (this != &str)
+            {
+                delete[] _str;
+                _str = new char[str._capacity + 1];
+                _size = str._size;
+                _capacity = str._capacity;
+                strcpy(_str, str._str);
+                return *this;
+            }
+        }
+
+
+        ~string()
+        {
+            delete[] _str;
+            _size = _capacity = 0;
+        }
+
+        const char* c_str()
+        {
+            return _str;
+        }
+
+    private:
+        char* _str;
+        int _size;
+        int _capacity;
+    };
+}
+
+
 int main()
 {
-    //string str = "ab-cd";
-    //reverseOnlyLetters(str);
-    string num1 = "123";
-    string num2 = "12";
-    string ret = addStrings(num1, num2);
-    cout << ret << endl;
-	return 0;
+    kele::string str1 = "abc";
+    kele::string str2 = "hello word";
+    str1 = str2;
+    cout << str1.c_str() << endl;
+    cout << str2.c_str() << endl;
+
+    return 0;
 }
