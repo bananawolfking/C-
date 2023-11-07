@@ -1,7 +1,6 @@
-#include<iostream>
-#include<string>
+#include"string.h"
 
-using namespace std;
+
 
 bool IsLetter(char ch)
 {
@@ -114,86 +113,65 @@ string addStrings(string& num1, string& num2) {
 
 
 
-namespace kele
-{
-    class string
-    {
-    public:
-        string(const char* str = "")
-            :_size(strlen(str))
-        {
-            _capacity = _size;
-            _str = new char[_size + 1];
-            strcpy(_str, str);
-        }
-
-        string(const string& str)
-            :_size(str._size),
-            _capacity(str._capacity)
-        {
-            _str = new char[_size + 1];
-            strcpy(_str, str._str);
-        }
-
-        //string& operator=(const string& str)
-        //{
-        //    _size = str._size;
-        //    if (_capacity < str._capacity)
-        //    {
-        //        _capacity = str._capacity;
-        //        char* temp = (char*)realloc(_str, _capacity + 1);
-        //        if (temp == nullptr)
-        //        {
-        //            perror("relloc fail");
-        //            exit(-1);
-        //        }
-        //        _str = temp;
-        //    }
-        //    strcpy(_str, str._str);
-        //    //memcpy(_str, str._str, _size + 1);
-        //    return *this;
-        //}
-
-        string& operator=(const string& str)
-        {
-            if (this != &str)
-            {
-                delete[] _str;
-                _str = new char[str._capacity + 1];
-                _size = str._size;
-                _capacity = str._capacity;
-                strcpy(_str, str._str);
-                return *this;
-            }
-        }
-
-
-        ~string()
-        {
-            delete[] _str;
-            _size = _capacity = 0;
-        }
-
-        const char* c_str()
-        {
-            return _str;
-        }
-
-    private:
-        char* _str;
-        int _size;
-        int _capacity;
-    };
-}
+//int main()
+//{
+//    kele::string str1 = "abc";
+//    const kele::string str2 = "hello word";
+//    str1 = str2;
+//    cout << str1.c_str() << endl;
+//    cout << str2.c_str() << endl;
+//    for (char ch : str1)
+//    {
+//        cout << ch;
+//        ch++;
+//    }
+//    cout << endl;
+//
+//    auto begin = str2.begin();
+//    auto end = str2.end();
+//    while (begin != end)
+//    {
+//        cout << *begin;
+//        ++begin;
+//    }
+//    cout << endl;
+//
+//    kele::operator<<(cout, str1);
+//    cout << str1 << endl;;
+//
+//    cout << (str1 < str2) << endl;
+//    cout << (str1 == str2) << endl;
+//
+//
+//    return 0;
+//}
 
 
 int main()
 {
-    kele::string str1 = "abc";
-    kele::string str2 = "hello word";
-    str1 = str2;
-    cout << str1.c_str() << endl;
-    cout << str2.c_str() << endl;
+    kele::string s1 = "xxx";
+    kele::string s2 = "hello word";
 
+    //cout << s2.append(s1) << endl;
+
+    //s1.push_back('x');
+    //cout << s1 << endl;
+    //s1.push_back('x');
+    //cout << s1 << endl;
+    //s1.push_back('x');
+    //cout << s1 << endl;
+
+    //cout << (s2 += s1) << endl;
+    //s2 += s2;
+    //s2 += "hello word";
+    //s2 += '*';
+    cout << s2 << endl;
+    cout << s2.insert(0, '&') << endl;
+    cout << s2.insert(5, "xxx") << endl;
+    cout << s2.insert(5, s1) << endl;
+    cout << s2.erase(0, 1) << endl;
+    cout << s2.erase(4, 6) << endl;
+    cout << s2.erase(9, 1) << endl;
+    cout << s2.erase(1) << endl;
     return 0;
 }
