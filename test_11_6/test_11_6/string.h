@@ -102,6 +102,11 @@ namespace kele
             return _size;
         }
 
+        size_t capacity() const
+        {
+            return _capacity;
+        }
+
         bool empty() const
         {
             return _size == 0;
@@ -112,14 +117,36 @@ namespace kele
             return _str;
         }
 
+        void clear()
+        {
+            _str[0] = '\0';
+            _size = _capacity = 0;
+        }
+
+        void resize(size_t n, char ch)
+        {
+            if (n > _size)
+            {
+                if (n > _capacity)
+                {
+                    reserve(n);
+                }
+                memset(_str + _size, ch, n - _size);
+            }
+            _size = n;
+            _str[_size] = '\0';
+        }
+
         void reserve(size_t n = 0)
         {
-            assert(n >= _size);
-            char* tmp = new char[n + 1];
-            strcpy(tmp, _str);
-            delete[] _str;
-            _str = tmp;
-            _capacity = n;
+            if (n > _capacity)
+            {
+                char* tmp = new char[n + 1];
+                strcpy(tmp, _str);
+                delete[] _str;
+                _str = tmp;
+                _capacity = n;
+            }     
         }
 
         void push_back(const char ch)
@@ -130,6 +157,20 @@ namespace kele
             }
             _str[_size++] = ch;
             _str[_size] = '\0';
+        }
+
+        string substr(size_t pos = 0, size_t len = npos) const
+        {
+            assert(pos <= _size);
+
+            string ret;
+            size_t size = len >= _size - pos ? _size - pos : len;
+            ret.reserve(size);
+            while (size--)
+            {
+                ret += _str[pos++];
+            }
+            return ret;
         }
 
         string& append(const char* s)
@@ -199,10 +240,10 @@ namespace kele
             {
                 reserve(_capacity * 2);
             }
-            int cur = _size;
-            while (cur >= (int)pos)
+            size_t cur = _size + 1;
+            while (cur > pos)//cur - 1 >= pos 
             {
-                _str[cur + 1] = _str[cur];
+                _str[cur] = _str[cur - 1];
                 cur--;
             }
             _str[pos] = ch;
@@ -219,10 +260,10 @@ namespace kele
             {
                 reserve(_capacity + n);
             }
-            int cur = _size;
-            while (cur >= (int)pos)
+            size_t cur = _size + n;
+            while (cur - n + 1 > pos)//cur - n >= pos 当pos为0时会出错
             {
-                _str[cur + n] = _str[cur];
+                _str[cur] = _str[cur - n];
                 cur--;
             }
             for (int i = 0 ; i < n; i++)
@@ -242,10 +283,10 @@ namespace kele
             {
                 reserve(_capacity + n);
             }
-            int cur = _size;
-            while (cur >= (int)pos)
+            size_t cur = _size + n;
+            while (cur - n + 1 > pos)//cur - n >= pos 当pos为0时会出错
             {
-                _str[cur + n] = _str[cur];
+                _str[cur] = _str[cur - n];
                 cur--;
             }
             for (int i = 0; i < n; i++)
@@ -276,6 +317,54 @@ namespace kele
                 _size -= len;
             }
             return *this;
+        }
+
+
+        size_t find(char ch, size_t pos = 0) const
+        {
+            assert(pos <= _size);
+
+            for (size_t i = pos; i < _size; ++i)
+            {
+                if (_str[i] == ch)
+                {
+                    return i;
+                }
+            }
+            return npos;
+        }
+
+        size_t find(const char* s, size_t pos = 0) const
+        {
+            assert(pos <= _size);
+
+            const char* p = strstr(_str + pos, s);
+            if (p == nullptr)
+            {
+                return npos;
+            }
+
+            return p - _str;
+        }
+
+        size_t find(const string& s, size_t pos = 0) const
+        {
+            assert(pos <= _size);
+
+            const char* p = strstr(_str + pos, s._str);
+            if (p == nullptr)
+            {
+                return npos;
+            }
+
+            return p - _str;
+        }
+
+        void swap(string& s)
+        {
+            std::swap(_str, s._str);
+            std::swap(_size, s._size);
+            std::swap(_capacity, s._capacity);
         }
 
 
@@ -321,10 +410,81 @@ namespace kele
 
     const size_t string::npos = -1;
 
-    ostream& operator<<(ostream& out, string& s)
+    void swap(string& x, string& y)
     {
-        out << s.c_str();
+        x.swap(y);
+    }
+
+    ostream& operator<<(ostream& out, const string& s)
+    {
+        for (auto ch : s)
+        {
+            out << ch;
+        }
         return out;
+    }
+
+    istream& operator>>(istream& in, string& s)
+    {
+        s.clear();
+
+        //char ch = in.get();
+        //while (ch != ' ' && ch != '\n')
+        //{
+        //    s += ch;
+        //    ch = in.get();
+        //}
+
+        char buff[128];
+        size_t i = 0;
+        char ch = in.get();
+        while (ch != ' ' && ch != '\n')
+        {
+            buff[i++] = ch;
+            ch = in.get();
+            if (i == 127)
+            {
+                buff[127] = '\0';
+                s += buff;
+                i = 0;
+            }
+        }
+
+        if (i != 0)
+        {
+            buff[i] = '\0';
+            s += buff;
+        }
+
+        return in;
+    }
+
+    istream& getline(istream& in, string& s, char delim = '\n')
+    {
+        s.clear();
+
+        char buff[128];
+        size_t i = 0;
+        char ch = in.get();
+        while (ch != delim)
+        {
+            buff[i++] = ch;
+            ch = in.get();
+            if (i == 127)
+            {
+                buff[127] = '\0';
+                s += buff;
+                i = 0;
+            }
+        }
+
+        if (i != 0)
+        {
+            buff[i] = '\0';
+            s += buff;
+        }
+
+        return in;
     }
 
 }

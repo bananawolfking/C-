@@ -147,31 +147,64 @@ string addStrings(string& num1, string& num2) {
 //}
 
 
+//int main()
+//{
+//    kele::string s1 = "xxx";
+//    kele::string s2 = "hello word";
+//
+//    //cout << s2.append(s1) << endl;
+//
+//    //s1.push_back('x');
+//    //cout << s1 << endl;
+//    //s1.push_back('x');
+//    //cout << s1 << endl;
+//    //s1.push_back('x');
+//    //cout << s1 << endl;
+//
+//    //cout << (s2 += s1) << endl;
+//    //s2 += s2;
+//    //s2 += "hello word";
+//    //s2 += '*';
+//    cout << s2 << endl;
+//    cout << s2.insert(0, '&') << endl;
+//    cout << s2.insert(5, "xxx") << endl;
+//    cout << s2.insert(5, s1) << endl;
+//    cout << s2.erase(0, 1) << endl;
+//    cout << s2.erase(4, 6) << endl;
+//    cout << s2.erase(9, 1) << endl;
+//    cout << s2.erase(1) << endl;
+//    s2.resize(10, 'x');
+//    cout << s2 << endl;
+//    s2.resize(30, '#');
+//    cout << s2 << endl;
+//    s2.resize(10, 'x');
+//    cout << s2 << endl;
+//    return 0;
+//}
+
+
+//int main()
+//{
+//    kele::string s1 = "123456";
+//    cin >> s1;
+//    cout << s1 << endl;
+//
+//    kele::string s2 = "hello word";
+//    getline(cin, s2);
+//    swap(s2, s1);
+//    cout << s1 << endl;
+//    //cout << s1.insert(s1.find('o'), '#') << endl;
+//    return 0;
+//}
+
 int main()
 {
-    kele::string s1 = "xxx";
-    kele::string s2 = "hello word";
-
-    //cout << s2.append(s1) << endl;
-
-    //s1.push_back('x');
-    //cout << s1 << endl;
-    //s1.push_back('x');
-    //cout << s1 << endl;
-    //s1.push_back('x');
-    //cout << s1 << endl;
-
-    //cout << (s2 += s1) << endl;
-    //s2 += s2;
-    //s2 += "hello word";
-    //s2 += '*';
+    kele::string s1 = "hello word";
+    cout << s1.substr(6, 2) << endl;
+    std::string s2 = "hello word";
+    reverse(s2.begin(), s2.end());
     cout << s2 << endl;
-    cout << s2.insert(0, '&') << endl;
-    cout << s2.insert(5, "xxx") << endl;
-    cout << s2.insert(5, s1) << endl;
-    cout << s2.erase(0, 1) << endl;
-    cout << s2.erase(4, 6) << endl;
-    cout << s2.erase(9, 1) << endl;
-    cout << s2.erase(1) << endl;
+    reverse(s1.begin(), s1.end());
+    cout << s1 << endl;
     return 0;
 }
