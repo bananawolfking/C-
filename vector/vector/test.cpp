@@ -1,8 +1,9 @@
 #include<iostream>
 #include<vector>
+#include<algorithm>
 using namespace std;
 
-class Solution {
+class Solution1 {
     vector<string> date = { "", "","abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
 public:
     void Combinations(const string& digits, int dt, vector<string>& ret, string str)
@@ -56,20 +57,20 @@ public:
 template<class X>
 void Print(const kele::vector<X>& v)
 {
-    for (int i = 0; i < v.size(); ++i)
-    {
-        cout << v[i] << " ";
-    }
-    cout << endl;
+    //for (int i = 0; i < v.size(); ++i)
+    //{
+    //    cout << v[i] << " ";
+    //}
+    //cout << endl;
 
-    auto it = v.begin();//?
-    //kele::vector<int>::const_iterator it = v.begin();
-    while (it != v.end())
-    {
-        cout << *it << " ";
-        ++it;
-    }
-    cout << endl;
+    //auto it = v.begin();//?
+    ////kele::vector<int>::const_iterator it = v.begin();
+    //while (it != v.end())
+    //{
+    //    cout << *it << " ";
+    //    ++it;
+    //}
+    //cout << endl;
     
     for (auto x : v)
     {
@@ -108,6 +109,28 @@ void test1()
     Print(v);
 }
 
+void test3()
+{
+    kele::vector<int> v(5, 2);
+
+    Print(v);
+
+    //kele::vector<string> v2(10, "kele");
+    //Print(v2);
+    //auto pos = find(v2.begin(), v2.end(), "kele");
+    //v2.insert(pos, "hello");
+    //Print(v2);
+
+    kele::vector<int> v3(v.begin(), v.end() - 1);
+    Print(v3);
+
+    int arr[] = { 50,2,3,1 };
+    kele::vector<int> v4(arr, arr + 4);
+    Print(v4);
+    sort(v4.begin(), v4.end());
+    Print(v4);
+}
+
 void test2()
 {
     kele::vector<string> v;
@@ -118,8 +141,28 @@ void test2()
     Print(v);
 }
 
+
+
+void test4()
+{
+    kele::vector<kele::vector<int>> vv1 ;
+    vv1 = kele::Solution().generate(8);//赋值构造
+    kele::vector<kele::vector<int>> vv = vv1;//防止编译器优化成直接构造
+    for (int i = 0; i < vv.size(); ++i)
+    {
+        for (int j = 0; j < vv[i].size(); ++j)
+        {
+            cout << vv[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
+
+
 int main()
 {
-    //test2();
+    test4();
     return 0;
 }

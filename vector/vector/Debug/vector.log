@@ -1,0 +1,7 @@
+﻿  test.cpp
+D:\VS2022\code\c++-learning\vector\vector\vector.h(228,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\VS2022\code\c++-learning\vector\vector\test.cpp(151,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\VS2022\code\c++-learning\vector\vector\test.cpp(153,27): warning C4018: “<”: 有符号/无符号不匹配
+D:\VS2022\code\c++-learning\vector\vector\vector.h(66): warning C4715: “kele::vector<kele::vector<int> >::operator=”: 不是所有的控件路径都返回值
+D:\VS2022\code\c++-learning\vector\vector\vector.h(66): warning C4715: “kele::vector<int>::operator=”: 不是所有的控件路径都返回值
+  vector.vcxproj -> D:\VS2022\code\c++-learning\vector\Debug\vector.exe

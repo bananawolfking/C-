@@ -14,10 +14,56 @@ namespace kele
 		typedef const T* const_iterator;
 
 		vector()
-			:_start(nullptr),
-			_finish(nullptr),
-			_end_of_storage(nullptr)
 		{}
+
+		vector(int n, const T& val = T())//int n ∑¿÷π±®¥Ì
+		{
+			reserve(n);
+			while (n--)
+			{
+				push_back(val);
+			}
+		}
+
+		template <class InputIterator>
+		vector(InputIterator first, InputIterator last)
+		{
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+
+		vector(const vector<T>& v)
+		{
+			if (v._start)
+			{
+				reserve(v.capacity());
+				size_t v_size = v.size();
+				for (size_t i = 0; i < v_size; ++i)
+				{
+					_start[i] = v._start[i];
+				}
+				_finish = _start + v_size;
+			}
+		}
+
+		vector<T>& operator=(const vector<T>& v)
+		{
+			if (v._start)
+			{
+				delete[] _start;
+				reserve(v.capacity());
+				size_t v_size = v.size();
+				for (size_t i = 0; i < v_size; ++i)
+				{
+					_start[i] = v._start[i];
+				}
+				_finish = _start + v_size;
+				return *this;
+			}
+		}
 
 		~vector()
 		{
@@ -47,11 +93,14 @@ namespace kele
 		{
 			if (n > capacity())
 			{
-				size_t sz = size();
+				size_t sz = size();//
 				iterator tmp = new T[n];
 				if (_start)
 				{
-					memcpy(tmp, _start, sizeof(T) * size());
+					for (size_t i = 0; i < size(); ++i)
+					{
+						tmp[i] = _start[i];//…ÓøΩ±¥
+					}
 					delete[] _start;
 				}
 				_start = tmp;
@@ -121,7 +170,7 @@ namespace kele
 			return pos;
 		}
 
-		void erase(iterator pos)
+		iterator erase(iterator pos)
 		{
 			assert(pos >= _start);
 			assert(pos < _finish);
@@ -133,6 +182,8 @@ namespace kele
 				++begin;
 			}
 			--_finish;
+
+			return pos;
 		}
 
 		T& operator[](size_t pos)
@@ -155,9 +206,36 @@ namespace kele
 		}
 
 	private:
-		iterator _start;
-		iterator _finish;
-		iterator _end_of_storage;
+		iterator _start = nullptr;
+		iterator _finish = nullptr;
+		iterator _end_of_storage = nullptr;
+	};
+
+	class Solution {
+	public:
+		vector<vector<int>> generate(int numRows) 
+		{
+			vector<vector<int>> vv;
+			vv.resize(numRows, vector<int>());
+			for (int i = 0; i < numRows; ++i)
+			{
+				vv[i].resize(i + 1, 0);
+				vv[i][0] = vv[i][i] = 1;
+			}
+
+			for (int i = 0; i < numRows; ++i)
+			{
+				for (int j = 0; j < vv[i].size(); ++j)
+				{
+					if (vv[i][j] == 0)
+					{
+						vv[i][j] = vv[i - 1][j - 1] + vv[i - 1][j];
+					}
+				}
+			}
+
+			return vv;
+		}
 	};
 
 }
