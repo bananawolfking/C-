@@ -159,6 +159,20 @@ void test4()
     cout << endl;
 }
 
+void test5()
+{
+    kele::vector<int> v;
+    v.push_back(1);
+    v.push_back(2);
+    v.push_back(3);
+    v.push_back(4);
+
+    auto pos = find(v.begin(), v.end(), 2);
+    v.reserve(20);
+
+
+    v.insert(v.begin(), 10);
+}
 
 
 int main()
