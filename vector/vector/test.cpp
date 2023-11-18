@@ -148,9 +148,10 @@ void test4()
     kele::vector<kele::vector<int>> vv1 ;
     vv1 = kele::Solution().generate(8);//赋值构造
     kele::vector<kele::vector<int>> vv = vv1;//防止编译器优化成直接构造
-    for (int i = 0; i < vv.size(); ++i)
+    /*kele::vector<kele::vector<int>> vv = kele::Solution().generate(8);*/
+    for (size_t i = 0; i < vv.size(); ++i)
     {
-        for (int j = 0; j < vv[i].size(); ++j)
+        for (size_t j = 0; j < vv[i].size(); ++j)
         {
             cout << vv[i][j] << " ";
         }
@@ -166,12 +167,9 @@ void test5()
     v.push_back(2);
     v.push_back(3);
     v.push_back(4);
-
-    auto pos = find(v.begin(), v.end(), 2);
-    v.reserve(20);
-
-
-    v.insert(v.begin(), 10);
+    Print(v);
+    ++*(v.begin());
+    Print(v);
 }
 
 

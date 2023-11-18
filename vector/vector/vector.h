@@ -35,32 +35,50 @@ namespace kele
 			}
 		}
 
+		//vector(const vector<T>& v)
+		//{
+		//	if (v._start)
+		//	{
+		//		reserve(v.capacity());
+		//		size_t v_size = v.size();
+		//		for (size_t i = 0; i < v_size; ++i)
+		//		{
+		//			_start[i] = v._start[i];
+		//		}
+		//		_finish = _start + v_size;
+		//	}
+		//}
+
 		vector(const vector<T>& v)
 		{
 			if (v._start)
 			{
-				reserve(v.capacity());
-				size_t v_size = v.size();
-				for (size_t i = 0; i < v_size; ++i)
-				{
-					_start[i] = v._start[i];
-				}
-				_finish = _start + v_size;
+				vector<T> tmp(v.begin(), v.end());
+				swap(tmp);
 			}
 		}
 
-		vector<T>& operator=(const vector<T>& v)
+		//vector<T>& operator=(const vector<T>& v)
+		//{
+		//	if (v._start)
+		//	{
+		//		delete[] _start;
+		//		reserve(v.capacity());
+		//		size_t v_size = v.size();
+		//		for (size_t i = 0; i < v_size; ++i)
+		//		{
+		//			_start[i] = v._start[i];
+		//		}
+		//		_finish = _start + v_size;
+		//		return *this;
+		//	}
+		//}
+
+		vector<T>& operator=(vector<T> v)
 		{
 			if (v._start)
 			{
-				delete[] _start;
-				reserve(v.capacity());
-				size_t v_size = v.size();
-				for (size_t i = 0; i < v_size; ++i)
-				{
-					_start[i] = v._start[i];
-				}
-				_finish = _start + v_size;
+				swap(v);
 				return *this;
 			}
 		}
@@ -200,6 +218,13 @@ namespace kele
 			return _start[pos];
 		}
 
+		void swap(vector<T>& x)
+		{
+			std::swap(this->_start, x._start);
+			std::swap(this->_finish, x._finish);
+			std::swap(this->_end_of_storage, x._end_of_storage);
+		}
+
 		bool empty()
 		{
 			return _start == _finish;
@@ -225,7 +250,7 @@ namespace kele
 
 			for (int i = 0; i < numRows; ++i)
 			{
-				for (int j = 0; j < vv[i].size(); ++j)
+				for (size_t j = 0; j < vv[i].size(); ++j)
 				{
 					if (vv[i][j] == 0)
 					{

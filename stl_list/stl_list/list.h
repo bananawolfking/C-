@@ -96,6 +96,47 @@ namespace kele
 			_head = new node;
 		}
 
+		template<class InputIterator>
+		list(InputIterator first, InputIterator last)
+		{
+			_head = new node;
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+
+		/*list(const list<T>& x)
+		{
+			_head = new node;
+			for (auto e : x)
+			{
+				push_back(e);
+			}
+		}*/
+
+		list(const list<T>& x)
+		{
+			_head = new node;
+			list<T> tmp(x.begin(), x.end());
+			swap(tmp);
+		}
+
+		list<T>& operator=(list<T> x)
+		{
+			_head = new node;
+			swap(x);
+			return *this;
+		}
+
+		~list()
+		{
+			clear();
+			delete _head;
+			_head = nullptr;
+		}
+
 		iterator begin()
 		{
 			return iterator(_head->_next);
@@ -103,7 +144,8 @@ namespace kele
 
 		const_iterator begin() const
 		{
-			return const_iterator(_head->_next);// const node* const _head 的 _head可不可以解引用
+			//_head = _head->_next;
+			return const_iterator(_head->_next);// const node* const _head 
 		}
 
 		iterator end()
@@ -118,14 +160,16 @@ namespace kele
 
 		void push_back(const T& val)
 		{
-			node* tail = _head->_prev;
-			node* newnode = new node(val);
+			//node* tail = _head->_prev;
+			//node* newnode = new node(val);
 
-			tail->_next = newnode;
-			newnode->_prev = tail;
-			newnode->_next = _head;
-			_head->_prev = newnode;
-			//insert(--end(), val);
+			//tail->_next = newnode;
+			//newnode->_prev = tail;
+			//newnode->_next = _head;
+			//_head->_prev = newnode;
+			insert(end(), val);
+			//为什么可以--end()
+			//因为自定义类型的临时对象具有常性，但不是真正的具有常性，可以被修改
 		}
 
 		void push_front(const T& val)
@@ -143,7 +187,7 @@ namespace kele
 			erase(begin());
 		}
 
-		void insert(const iterator& pos, const T& val)
+		void insert(iterator pos, const T& val)
 		{
 			node* prev = pos._it->_prev;
 			node* next = pos._it;
@@ -155,7 +199,7 @@ namespace kele
 			next->_prev = newnode;
 		}
 
-		void erase(const iterator& pos)
+		iterator erase(iterator pos)
 		{
 			assert(pos != end());
 
@@ -165,6 +209,33 @@ namespace kele
 
 			prev->_next = next;
 			next->_prev = prev;
+
+			return iterator(next);
+		}
+
+		void clear()
+		{
+			/*while (!empty())
+			{
+				erase(begin());
+			}*/
+
+			iterator it = begin();
+			while (it != end())
+			{
+				/*it = erase(it);*/
+				erase(it++);
+			}
+		}
+
+		void swap(list<T>& x)
+		{
+			std::swap(this->_head, x._head);
+		}
+
+		bool empty()
+		{
+			return begin() == end();
 		}
 
 	private:
