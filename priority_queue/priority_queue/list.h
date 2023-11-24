@@ -26,11 +26,20 @@ namespace kele
 	struct __list_iterator
 	{
 		typedef list_node<T> node;
+
+		typedef __list_iterator<T, T&, T*> iterator;
+		typedef __list_iterator<T, const T&, const T*> const_iterator;
 		typedef __list_iterator<T, Ref, Ptr> self;
 		node* _it;
 
+		__list_iterator()
+		{}
 		__list_iterator(node* x)
 			:_it(x)
+		{}
+
+		__list_iterator(const iterator& x)
+			:_it(x._it)
 		{}
 
 		Ref operator*()
@@ -91,24 +100,27 @@ namespace kele
 		typedef __list_iterator<T, const T&, const T*> const_iterator;
 
 		typedef Reverse_Iterator<iterator, T&, T*> reverse_iterator;
-		typedef Reverse_Iterator<iterator, const T&, const T*> const_reverse_iterator;
+		typedef Reverse_Iterator<const_iterator, const T&, const T*> const_reverse_iterator;
+
+		//typedef Reverse_Iterator<T, iterator, T&, T*> reverse_iterator;
+		//typedef Reverse_Iterator<T, const_iterator, const T&, const T*> const_reverse_iterator;
 
 		iterator begin(){ return iterator(_head->_next);}
 
 		//_head = _head->_next;// const node* const _head 
 		const_iterator begin() const { return const_iterator(_head->_next);}
 
-		reverse_iterator rbegin(){ return iterator(_head);}
-
-		const_reverse_iterator rbegin() const{ return iterator(_head);}
-
 		iterator end(){ return iterator(_head);}
 
 		const_iterator end() const{ return const_iterator(_head);}
 
-		reverse_iterator rend(){ return iterator(_head->_next);}
+		reverse_iterator rbegin() { return reverse_iterator(end()); }
 
-		const_reverse_iterator rend() const{ return iterator(_head->_next);}
+		const_reverse_iterator rbegin() const { return const_reverse_iterator(end()); }
+
+		reverse_iterator rend() { return reverse_iterator(begin()); }
+
+		const_reverse_iterator rend() const { return const_reverse_iterator(begin()); }
 
 		//*******************************************************************
 

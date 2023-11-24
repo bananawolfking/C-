@@ -2,15 +2,21 @@
 
 namespace kele
 {
+	/*template<class T, class iteartor, class Ref, class Ptr>*/
 	template<class iteartor, class Ref, class Ptr>
 	struct Reverse_Iterator
 	{
 		typedef Reverse_Iterator<iteartor, Ref, Ptr> self;
+		/*typedef Reverse_Iterator<T, iteartor, T&, T*> X;*/
 		iteartor rit;
 
 		Reverse_Iterator(iteartor x)
 			:rit(x)
 		{}
+
+		//Reverse_Iterator(X x)
+		//	:rit(x.rit)
+		//{}
 
 		Ref operator*()
 		{
@@ -20,8 +26,7 @@ namespace kele
 
 		Ptr operator->()
 		{
-			iteartor tmp = rit;
-			return &(--tmp);
+			return &(operator*());
 		}
 
 		self operator++()

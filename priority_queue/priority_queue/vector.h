@@ -14,6 +14,9 @@ namespace kele
 		typedef Reverse_Iterator<iterator, T&, T*> reverse_iterator;
 		typedef Reverse_Iterator<iterator, const T&, const T*> const_reverse_iterator;
 
+		//typedef Reverse_Iterator<T, iterator, T&, T*> reverse_iterator;
+		//typedef Reverse_Iterator<T, iterator, const T&, const T*> const_reverse_iterator;
+
 		iterator begin() { return _start; }
 
 		iterator end() { return _finish; }
