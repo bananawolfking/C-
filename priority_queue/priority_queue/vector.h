@@ -8,14 +8,15 @@ namespace kele
 	class vector
 	{
 	public:
+
 		typedef T* iterator;
 		typedef const T* const_iterator;
 
-		typedef Reverse_Iterator<iterator, T&, T*> reverse_iterator;
-		typedef Reverse_Iterator<iterator, const T&, const T*> const_reverse_iterator;
+		typedef Reverse_Iterator<iterator> reverse_iterator;
+		typedef Reverse_Iterator<const_iterator> const_reverse_iterator;
 
-		//typedef Reverse_Iterator<T, iterator, T&, T*> reverse_iterator;
-		//typedef Reverse_Iterator<T, iterator, const T&, const T*> const_reverse_iterator;
+		//typedef Reverse_Iterator<T, T&, T*> reverse_iterator;
+		//typedef Reverse_Iterator<T, const T&, const T*> const_reverse_iterator;
 
 		iterator begin() { return _start; }
 

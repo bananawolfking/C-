@@ -26,6 +26,10 @@ namespace kele
 	struct __list_iterator
 	{
 		typedef list_node<T> node;
+		typedef T value_type;
+		typedef Ref reference;
+		typedef Ptr pointer;
+
 
 		typedef __list_iterator<T, T&, T*> iterator;
 		typedef __list_iterator<T, const T&, const T*> const_iterator;
@@ -38,6 +42,8 @@ namespace kele
 			:_it(x)
 		{}
 
+		//template<class t, class ref, class ptr>
+		//__list_iterator(const __list_iterator<t,ref,ptr>& x)//不可以，这样const就可以作为左值
 		__list_iterator(const iterator& x)
 			:_it(x._it)
 		{}
@@ -96,14 +102,15 @@ namespace kele
 	{
 		typedef list_node<T> node;
 	public:
+
 		typedef __list_iterator<T, T&, T*> iterator;
 		typedef __list_iterator<T, const T&, const T*> const_iterator;
 
-		typedef Reverse_Iterator<iterator, T&, T*> reverse_iterator;
-		typedef Reverse_Iterator<const_iterator, const T&, const T*> const_reverse_iterator;
+		typedef Reverse_Iterator<iterator> reverse_iterator;
+		typedef Reverse_Iterator<const_iterator> const_reverse_iterator;
 
-		//typedef Reverse_Iterator<T, iterator, T&, T*> reverse_iterator;
-		//typedef Reverse_Iterator<T, const_iterator, const T&, const T*> const_reverse_iterator;
+		//typedef Reverse_Iterator<iterator, T&, T*> reverse_iterator;
+		//typedef Reverse_Iterator<const_iterator, const T&, const T*> const_reverse_iterator;
 
 		iterator begin(){ return iterator(_head->_next);}
 

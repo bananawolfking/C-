@@ -2,29 +2,54 @@
 
 namespace kele
 {
-	/*template<class T, class iteartor, class Ref, class Ptr>*/
-	template<class iteartor, class Ref, class Ptr>
+	template <class Iterator>
+	struct iterator_traits {
+		typedef typename Iterator::value_type        value_type;
+		typedef typename Iterator::pointer           pointer;
+		typedef typename Iterator::reference         reference;
+	};
+
+	template <class T>
+	struct iterator_traits<T*> {
+		typedef T                          value_type;
+		typedef T*						   pointer;
+		typedef T&						   reference;
+	};
+
+	template <class T>
+	struct iterator_traits<const T*> {
+		typedef T                          value_type;
+		typedef const T*				   pointer;
+		typedef const T&				   reference;
+	};
+
+	template<class Iteartor>
 	struct Reverse_Iterator
 	{
-		typedef Reverse_Iterator<iteartor, Ref, Ptr> self;
-		/*typedef Reverse_Iterator<T, iteartor, T&, T*> X;*/
-		iteartor rit;
+		typedef typename iterator_traits<Iteartor>::value_type value_type;
+		typedef typename iterator_traits<Iteartor>::reference reference;
+		typedef typename iterator_traits<Iteartor>::pointer pointer;
 
-		Reverse_Iterator(iteartor x)
+		typedef Reverse_Iterator<Iteartor> self;
+
+		Iteartor rit;
+
+		Reverse_Iterator(Iteartor x)
 			:rit(x)
 		{}
 
-		//Reverse_Iterator(X x)
-		//	:rit(x.rit)
-		//{}
+		template<class iter>
+		Reverse_Iterator(const Reverse_Iterator<iter>& x)
+			:rit(x.rit)
+		{}
 
-		Ref operator*()
+		reference operator*()
 		{
-			iteartor tmp = rit;
+			Iteartor tmp = rit;
 			return *(--tmp);
 		}
 
-		Ptr operator->()
+		pointer operator->()
 		{
 			return &(operator*());
 		}
@@ -66,3 +91,73 @@ namespace kele
 		}
 	};
 }
+
+
+
+//#pragma once
+//
+//namespace kele
+//{
+//	template<class iteartor, class Ref, class Ptr>
+//	struct Reverse_Iterator
+//	{
+//		typedef Reverse_Iterator<iteartor, Ref, Ptr> self;
+//		iteartor rit;
+//
+//		Reverse_Iterator(iteartor x)
+//			:rit(x)
+//		{}
+//
+//		template<class Itea, class ref, class ptr>
+//		Reverse_Iterator(const Reverse_Iterator<Itea, ref, ptr>& x)
+//			:rit(x.rit)
+//		{}
+//
+//		Ref operator*()
+//		{
+//			iteartor tmp = rit;
+//			return *(--tmp);
+//		}
+//
+//		Ptr operator->()
+//		{
+//			return &(operator*());
+//		}
+//
+//		self operator++()
+//		{
+//			--rit;
+//			return *this;
+//		}
+//
+//		self operator++(int)
+//		{
+//			self tmp = *this;
+//			--rit;
+//			return tmp;
+//		}
+//
+//		self operator--()
+//		{
+//			++rit;
+//			return *this;
+//		}
+//
+//		self operator--(int)
+//		{
+//			self tmp = *this;
+//			++rit;
+//			return tmp;
+//		}
+//
+//		bool operator!=(const self& x) const
+//		{
+//			return rit != x.rit;
+//		}
+//
+//		bool operator==(const self& x) const
+//		{
+//			return rit == x.rit;
+//		}
+//	};
+//}

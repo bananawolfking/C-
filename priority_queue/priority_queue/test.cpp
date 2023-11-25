@@ -5,9 +5,11 @@
 
 using namespace std;
 
-#include"priority_queue.h"
 #include"list.h"
 #include"vector.h"
+#include"priority_queue.h"
+
+
 
 void test1()
 {
