@@ -129,12 +129,14 @@ using namespace std;
 
 
 ////////////////////////////////////////
-
+#include<string>
+#include<queue>
+#include<vector>
 #include "BinarySearchTree.h"
 
-void TestBSTree()
+void TestBSTree1()
 {
-	BSTree<int> b;
+	key::BSTree<int> b;
 	int a[] = { 8, 3, 1, 10, 6, 4, 7, 14, 13 };
 	
 	for (auto e : a)
@@ -143,7 +145,7 @@ void TestBSTree()
 	}
 	b.InOrder();
 
-	BSTree<int> c = b;
+	key::BSTree<int> c = b;
 
 	//cout << b.FindR(9) << endl;
 	//cout << b.FindR(13) << endl;
@@ -162,9 +164,68 @@ void TestBSTree()
 	c.InOrder();
 }
 
+void TestBSTree2()
+{
+	key_value::BSTree<string, string> dict;
+	dict.Insert("string", "×Ö·û´®");
+	dict.Insert("insert", "²åÈë");
+	dict.Insert("erase", "É¾³ý");
+	dict.Insert("print", "´òÓ¡");
+	dict.Insert("kele", "¿ÉÀÖ");
+
+	string str;
+	while (cin >> str)
+	{
+		auto ptr = dict.Find(str);
+		if (ptr == nullptr)
+		{
+			cout << "Î´ÕÒµ½" << endl;
+		}
+		else
+		{
+			cout << ":" << ptr->_value << endl;
+		}
+	}
+}
+
+void TestBSTree3()
+{
+	string arr[] = { "Æ»¹û", "Î÷¹Ï", "Æ»¹û", "Î÷¹Ï", "Æ»¹û", "Æ»¹û", "Î÷¹Ï","Æ»¹û", "Ïã½¶", "Æ»¹û", "Ïã½¶" };
+	key_value::BSTree<string, int> count;
+	for (auto e : arr)
+	{
+		auto ptr = count.Find(e);
+		if (ptr == nullptr)
+		{
+			count.Insert(e, 1);
+		}
+		else
+		{
+			ptr->_value++;
+		}
+	}
+	count.InOrder();
+
+}
+
+void test()
+{
+	key::BSTree<int> b;
+	vector<vector<int>> ret;
+	int a[] = { 8, 3, 1, 10, 6, 4, 7, 14, 13 };
+
+	for (auto e : a)
+	{
+		b.InsertR(e);
+	}
+	b.InOrder();
+	ret = b.levelOrder();
+
+}
 
 int main()
 {
-	TestBSTree();
+	//TestBSTree3();
+	test();
 	return 0;
 }
