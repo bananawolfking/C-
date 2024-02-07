@@ -144,18 +144,56 @@ using namespace std;
 //};
 
 
-
+#include<time.h>
 #include"AVLtree.h"
 
 void testAVL1()
 {
+    srand((unsigned int)time(NULL));
+    
     AVLtree<int, int> a;
-    int arr[] = { 16, 3, 7, 11, 9, 26, 18, 14, 15 };
+    int arr[] = { 16, 3, 7, 11, 9, 26, 18, 14, 15, 1, 22,30,32};
     for (auto e : arr)
     {
-        a.insert(e, 0);
+        a.insert(make_pair(e, 0));
     }
-    
+    a.InOrder();
+    int d[] = {1};
+    for (auto e : d)
+    {
+        cout << e << endl;
+        a.erase(e);
+        cout << a.check_balance() << "!";
+        cout << endl;
+        a.InOrder();
+    }
+    for (auto e : arr)
+    {
+        cout << e << endl;
+        a.erase(e);
+        cout << a.check_balance() << "!";
+        cout << endl;
+        a.InOrder();
+    }
+
+
+    for(int i = 0; i<=1000;i++)
+    {
+        int ret2 = rand() % 1000 + 1;
+        a.insert(make_pair(i, 0));
+    }
+    a.InOrder();
+    cout << a.check_balance() << "!";
+
+    for (int i = 0; i <= 1000; i++)
+    {
+        int ret2 = rand() % 1000 + 1;
+        a.erase(ret2);
+        if (!a.check_balance())
+            int x = 0;
+    }
+    a.InOrder();
+    cout << a.check_balance() << "!";
 }
 
 int main()
