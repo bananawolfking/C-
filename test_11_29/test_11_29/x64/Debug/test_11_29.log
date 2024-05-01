@@ -1,5 +1,0 @@
-﻿  源.cpp
-D:\VS2022\code\c++-learning\test_11_29\test_11_29\源.cpp(129,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\VS2022\code\c++-learning\test_11_29\test_11_29\源.cpp(130,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\VS2022\code\c++-learning\test_11_29\test_11_29\源.cpp(154,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-  test_11_29.vcxproj -> D:\VS2022\code\c++-learning\test_11_29\x64\Debug\test_11_29.exe
