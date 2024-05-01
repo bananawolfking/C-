@@ -1,3 +1,0 @@
-﻿  test.cpp
-D:\VS2022\code\c++-learning\test_10_17\test_10_17\Func.h(178,3): warning C4804: “<”: 在操作中使用类型“bool”不安全
-  test_10_17.vcxproj -> D:\VS2022\code\c++-learning\test_10_17\x64\Debug\test_10_17.exe
