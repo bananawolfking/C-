@@ -265,36 +265,56 @@ int sub_fun(int x, int y)
 //}
 
 
-class sub_class
+//class sub_class
+//{
+//public:
+//	static int _sub(int x, int y)
+//	{
+//		return x - y;
+//	}
+//	int sub(int x, int y)
+//	{
+//		return x - y;
+//	}
+//};
+//
+//int main()
+//{
+//	function<int(int, int)> f1 = &sub_class::_sub;// 对于类静态成员函数，需要指定类域，可以不加&
+//	cout << f1(1, 3) << endl;
+//
+//	function<int(sub_class*, int, int)> f2 = &sub_class::sub;// 对于成员函数，隐藏了this指针，而且需要加&符号
+//	sub_class pc;
+//	cout << f2(&pc, 1, 3) << endl;// 匿名对象属于临时变量，右值不能取地址
+//
+//	function<int(sub_class, int, int)> f3 = &sub_class::sub;// 对于成员函数，隐藏了this指针，而且需要加&符号
+//	cout << f3(sub_class(), 1, 3) << endl;// 编译器的特殊处理，传类型，其实如果成员函数使用了类内成员是临时变量的
+//
+//	// 绑定bind
+//	// 可以改变参数的位置，也可以改变参数的数量，通过写死
+//	function<int(int, int)> f4 = bind(&sub_class::sub, sub_class(), placeholders::_1, placeholders::_2);
+//	cout << f4(1, 3) << endl;
+//
+//
+//
+//	return 0;
+//}
+
+void func(int a, int b, int c)
 {
-public:
-	static int _sub(int x, int y)
-	{
-		return x - y;
-	}
-	int sub(int x, int y)
-	{
-		return x - y;
-	}
-};
+	cout << a << endl;
+	cout << b << endl;
+	cout << c << endl;
+}
 
 int main()
 {
-	function<int(int, int)> f1 = &sub_class::_sub;// 对于类静态成员函数，需要指定类域，可以不加&
-	cout << f1(1, 3) << endl;
+	function<void(int, int, int)> f1 = bind(func, placeholders::_1, placeholders::_2, placeholders::_3);
+	f1(1, 2, 3);
 
-	function<int(sub_class*, int, int)> f2 = &sub_class::sub;// 对于成员函数，隐藏了this指针，而且需要加&符号
-	sub_class pc;
-	cout << f2(&pc, 1, 3) << endl;// 匿名对象属于临时变量，右值不能取地址
-
-	function<int(sub_class, int, int)> f3 = &sub_class::sub;// 对于成员函数，隐藏了this指针，而且需要加&符号
-	cout << f3(sub_class(), 1, 3) << endl;// 编译器的特殊处理，传类型，其实如果成员函数使用了类内成员是临时变量的
-
-	// 绑定bind
-	// 可以改变参数的位置，也可以改变参数的数量，通过写死
-	function<int(int, int)> f4 = bind(&sub_class::sub, sub_class(), placeholders::_1, placeholders::_2);
-	cout << f4(1, 3) << endl;
-
+	function<void(int, int)> f2 = bind(func, placeholders::_1, 2, placeholders::_2);
+	// placeholders的参数数字对应的是函数调用时要填入参数的顺序和个数
+	f2(1, 3);
 
 
 	return 0;
