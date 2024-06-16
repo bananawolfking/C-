@@ -1,4 +1,5 @@
 #include <iostream>
+#include <mutex>
 
 using namespace std;;
 
@@ -192,6 +193,7 @@ private:
 //
 
 
+
 // 1. 先满足单例条件，只会被创建一次
 class Hungry_man
 {
@@ -229,12 +231,26 @@ Hungry_man Hungry_man::_Instance;
 class Lazy_man
 {
 public:
+	//static Lazy_man* GetInstance()
+	//{
+	//	// 静态成员函数，可以访问静态成员
+	//	if (_Instance == nullptr) // 如果没有，需要，再创建
+	//	{
+	//		_Instance = new Lazy_man;// 这里不是线程安全的
+	//	}
+	//	return _Instance;
+	//}
+
 	static Lazy_man* GetInstance()
 	{
 		// 静态成员函数，可以访问静态成员
-		if (_Instance == nullptr) // 如果没有，需要，再创建
+		if (_Instance == nullptr)
 		{
-			_Instance = new Lazy_man;
+			if (_Instance == nullptr) // 如果没有，需要，再创建
+			{
+				lock_guard<mutex> lk(_mtx);
+				_Instance = new Lazy_man;// 这里不是线程安全的
+			}
 		}
 		return _Instance;
 	}
@@ -264,6 +280,8 @@ private:
 
 	static Lazy_man* _Instance;
 
+	static mutex _mtx;
+
 	class gc
 	{
 	public:
@@ -281,24 +299,62 @@ private:
 // 静态成员的初始化，指针类型可不会实例化
 Lazy_man* Lazy_man::_Instance = nullptr;
 Lazy_man::gc Lazy_man::_gc;
+mutex Lazy_man::_mtx;
+
+
+class Lazy_man_c11
+{
+public:
+	//static Lazy_man* GetInstance()
+	//{
+	//	// 静态成员函数，可以访问静态成员
+	//	if (_Instance == nullptr) // 如果没有，需要，再创建
+	//	{
+	//		_Instance = new Lazy_man;// 这里不是线程安全的
+	//	}
+	//	return _Instance;
+	//}
+
+	static Lazy_man_c11* GetInstance()
+	{
+		static Lazy_man_c11 lazy;
+		return &lazy;
+	}
+
+private:
+	//只会创建一次，说明只构造一次，没有拷贝，和赋值
+	Lazy_man_c11() 
+	{
+		cout << "lazy" << endl;
+	}
+};
 
 int main()
 {
-	Lazy_man* p1 = Lazy_man::GetInstance();
-	Lazy_man* p2 = Lazy_man::GetInstance();
-	Lazy_man* p3 = Lazy_man::GetInstance();
-
-	// 如果有人不明情况，就delete会导致报错；所以要把析构私有化，不能删除内部需要
-	//delete p1;
-
-	Lazy_man::Destroy();
-	cout << p1 << endl; // p1指针要注意了，没办法，属于时最好直接使用，不要保存到指针内部
-	Lazy_man* p4 = Lazy_man::GetInstance();
-
-	cout << "VVVVVVVVVVVVV" << endl;
-
-	// 解决回收问题
-	// 实现的目标：不用的时候可以显式的调用销毁，也可以在main函数结束的时候，自己析构
-
+	Lazy_man_c11::GetInstance();
 	return 0;
 }
+
+//int main()
+//{
+//	Hungry_man* qq = Hungry_man::GetInstance();
+//
+//
+//	Lazy_man* p1 = Lazy_man::GetInstance();
+//	Lazy_man* p2 = Lazy_man::GetInstance();
+//	Lazy_man* p3 = Lazy_man::GetInstance();
+//
+//	// 如果有人不明情况，就delete会导致报错；所以要把析构私有化，不能删除内部需要
+//	//delete p1;
+//
+//	Lazy_man::Destroy();
+//	cout << p1 << endl; // p1指针要注意了，没办法，属于时最好直接使用，不要保存到指针内部
+//	Lazy_man* p4 = Lazy_man::GetInstance();
+//
+//	cout << "VVVVVVVVVVVVV" << endl;
+//
+//	// 解决回收问题
+//	// 实现的目标：不用的时候可以显式的调用销毁，也可以在main函数结束的时候，自己析构
+//
+//	return 0;
+//}
