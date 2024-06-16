@@ -6,6 +6,7 @@
 #include <mutex>
 #include <time.h>
 #include <condition_variable>
+#include <atomic>
 
 using namespace std;
 
@@ -154,37 +155,206 @@ static void Print(int n, const string& name, int& x, mutex& mtx)
 // 交替打印
 
 
+//int main()
+//{
+//	mutex mtx;
+//	condition_variable cond;
+//	int n = 0;
+//	thread thd1([&]() {
+//		while (n < 100)
+//		{
+//			unique_lock<mutex> lk(mtx); // 上锁
+//			if (n % 2) // 奇数
+//				cond.wait(lk); // 条件等待
+//
+//			cout << this_thread::get_id() << ":" << n++ << endl;
+//			cond.notify_one();
+//		}
+//	});
+//
+//	thread thd2([&]() {
+//		while (n < 100)
+//		{
+//			unique_lock<mutex> lk(mtx); // 上锁
+//			if (!(n % 2)) // 偶数
+//				cond.wait(lk); // 条件等待
+//
+//			cout << this_thread::get_id() << ":" << n++ << endl;
+//			cond.notify_one();
+//		}
+//	});
+//
+//	thd1.join();
+//	thd2.join();
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	mutex mtx;
+//	condition_variable cond;
+//	bool flag = true;
+//	int n = 0;
+//	thread thd1([&]() {
+//		while (n < 100)
+//		{
+//			unique_lock<mutex> lk(mtx); // 上锁
+//			while (flag) // 奇数
+//				cond.wait(lk);
+//			// 条件等待
+//			if (n >= 100)
+//				break;
+//			cout << this_thread::get_id() << "-1" << ":" << n++ << endl;
+//			flag = true;
+//			cond.notify_one();
+//		}
+//	});
+//	// 会打印[0, 100]，
+//	// 当n==98时，线程2拿到锁，线程1在锁上阻塞，或者在条件变量的等待队列上
+//	// 线程2打印完后，n == 99，线程一拿到锁，并且满足条件，
+//	// 线程2在锁上阻塞或者先拿到锁，条件变量不满足，自动释放锁，如果是这两种情况，线程2一定是while里
+//	// 但是如果线程2在while判断前，时间片就已经到了，就会出现[0, 99]，这个时候线程1是满足条件执行的，n变成100了
+//	// 如果是前面两种情况，线程2就会在while循环中，[0, 100]
+//	// 
+//	thread thd2([&]() {
+//		while (n < 100)
+//		{
+//			unique_lock<mutex> lk(mtx); // 上锁
+//			while (!flag) // 偶数
+//				cond.wait(lk);
+//			// 条件等待
+//			if (n >= 100)
+//				break;
+//			cout << this_thread::get_id() << "-2" << ":" << n++ << endl;
+//			flag = false;
+//			cond.notify_one();
+//		}
+//	});
+//
+//	thd1.join();
+//	thd2.join();
+//
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	int n = 0;
+//	int size = 10000;
+//	mutex mtx;
+//	int a = 0;
+//	int b = 0;
+//	thread thd1([&]() {
+//		for (int i = 0; i < size; i++)
+//		{
+//			lock_guard<mutex> lk(mtx);
+//			n++;
+//			a++;
+//		}
+//		});
+//
+//	thread thd2([&]() {
+//		for (int i = 0; i < size; i++)
+//		{
+//			lock_guard<mutex> lk(mtx);
+//			n++;
+//			b++;
+//		}
+//		});
+//	thd1.join();
+//	thd2.join();
+//
+//	std::cout << n << endl;
+//	cout << "a:" << a << endl;
+//	cout << "b:" << b << endl;
+//	return 0;
+//}
+
+//int main()
+//{
+//	int n = 0;
+//	int size = 10000;
+//	mutex mtx;
+//	int a = 0;
+//	int b = 0;
+//	// 因为++是一个简单的操作，需要的时间很短，因为进程切换需要保存上下文，需要一些时间，
+//	// 这就会导致在时间片相同的情况下，一个线程频繁申请到锁，
+//	// 在这种情况下，自旋锁更合适，不阻塞，而是每隔一段时间，就询问
+//	thread thd1([&]() {
+//		while (n < size)
+//		{
+//			lock_guard<mutex> lk(mtx);
+//			n++;
+//			a++;
+//		}
+//		});
+//
+//	thread thd2([&]() {
+//		while (n < size)
+//		{
+//			lock_guard<mutex> lk(mtx);
+//			n++;
+//			b++;
+//		}
+//		});
+//	thd1.join();
+//	thd2.join();
+//
+//	std::cout << n << endl;
+//	cout << "a:" << a << endl;
+//	cout << "b:" << b << endl;
+//	return 0;
+//}
+
+using namespace std;
+
 int main()
 {
-	mutex mtx;
-	condition_variable cond;
-	int n = 0;
+	atomic<int> n = 0;
+	int size = 100000;
+	int a = 0;
+	int b = 0;
+	// atomic 通过原子操作来进行临界资源保护线程安全
+	// 利用 无锁编程 CAS compare and swap
+	// CPU提供的指令，CAS的过程是原子的，不会被打断的
+	// CAS(& , old, new)
+	// if(* != old) return false;
+	// else * = new; return true;
+	// do{}while(CAS())
 	thread thd1([&]() {
-		while (n < 100)
+		while (n < size)
 		{
-			unique_lock<mutex> lk(mtx); // 上锁
-			if (n % 2) // 奇数
-				cond.wait(lk); // 条件等待
-
-			cout << this_thread::get_id() << ":" << n++ << endl;
-			cond.notify_one();
+			int newval, old;
+			do 
+			{
+				old = n;
+				newval = old + 1;
+				
+			} while (!atomic_compare_exchange_weak(&n, &old, newval));
+			a++;
 		}
-	});
+		});
 
 	thread thd2([&]() {
-		while (n < 100)
+		while (n < size)
 		{
-			unique_lock<mutex> lk(mtx); // 上锁
-			if (!(n % 2)) // 偶数
-				cond.wait(lk); // 条件等待
+			int newval, old;
+			do
+			{
+				old = n;
+				newval = old + 1;
 
-			cout << this_thread::get_id() << ":" << n++ << endl;
-			cond.notify_one();
+			} while (!atomic_compare_exchange_weak(&n, &old, newval));
+			b++;
 		}
-	});
-
+		});
 	thd1.join();
 	thd2.join();
 
+	std::cout << n << endl;
+	cout << "a:" << a << endl;
+	cout << "b:" << b << endl;
 	return 0;
 }
