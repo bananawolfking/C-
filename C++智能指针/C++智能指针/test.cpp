@@ -91,9 +91,42 @@ void Test_shared_ptr3()
 	kele::shared_ptr<FILE> fp(fopen("test.txt", "r"), [](FILE* fp) {fclose(fp); });
 }
 
+#include <thread>
+#include <mutex>
+#include <atomic>
+
+void Test_shared_ptr4()
+{
+	atomic<int> i = 0;
+	int size = 10000;
+	kele::shared_ptr<double> p1(new double(1.1));
+	thread thd1([&]() {
+		while (i < size)
+		{
+			kele::shared_ptr<double> copy(p1);
+			i++;
+			(*copy)++;
+		}
+		});
+
+	thread thd2([&]() {
+		while (i < size)
+		{
+			kele::shared_ptr<double> copy(p1);
+			i++;
+			(*copy)++;
+		}
+		});
+	// 出现问题的原因是，两个线程如果同时copy shared_ptr 就会导致引用计数不准确，就有可能多次析构同一块空间
+	// 所以shared_ptr 的引用计数需要是线程安全的， 但是它所指向的内容不是线程安全的
+	thd1.join();
+	thd2.join();
+	cout << p1.use_count() << endl;
+}
+
 
 int main()
 {
-	Test_shared_ptr3();
+	Test_shared_ptr4();
 	return 0;
 }

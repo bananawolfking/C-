@@ -1,9 +1,11 @@
 #pragma once
 
 #include <functional>
+#include <atomic>
 
 namespace kele
 {
+	// 资产转移
 	template<class T>
 	class auto_ptr
 	{
@@ -105,19 +107,19 @@ namespace kele
 	public:
 		shared_ptr()
 			:_ptr(nullptr),
-			_pcount(new int(1))
+			_pcount(new atomic<int>(1))
 		{}
 
 		shared_ptr(T* ptr) noexcept
 			:_ptr(ptr),
-			_pcount(new int(1))
+			_pcount(new atomic<int>(1))
 		{}
 
 		// 提供delete方法
 		template<class D>
 		shared_ptr(T* ptr, D del) noexcept // 对于lambda表达式的接收就不能用引用
 			:_ptr(ptr),
-			_pcount(new int(1)),
+			_pcount(new atomic<int>(1)),
 			_del(del)
 		{}
 
@@ -176,8 +178,8 @@ namespace kele
 	private:
 		T* _ptr;
 		// 引用计数器
-		int* _pcount;
-		function<void(T*)> _del = [](T* ptr) {delete ptr; };
+		atomic<int>* _pcount;
+		function<void(T*)> _del = [](T* ptr) {delete ptr; };// 定制删除器
 	};
 
 
