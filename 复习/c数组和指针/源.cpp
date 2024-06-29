@@ -135,43 +135,197 @@ using namespace std;
 //	int* const p = nullptr;
 //}
 
-#include <string.h>
+//#include <string.h>
+//
+//int main()
+//{
+//	//int a[] = { 1,2,3,4 };
+//	//printf("%d\n", sizeof(a)); 
+//	//printf("%d\n", sizeof(a + 0));
+//	//printf("%d\n", sizeof(*a));
+//	//printf("%d\n", sizeof(a + 1));
+//	//printf("%d\n", sizeof(a[1]));
+//	//printf("%d\n", sizeof(&a));
+//	//printf("%d\n", sizeof(*&a));
+//	//printf("%d\n", sizeof(&a + 1));
+//	//printf("%d\n", sizeof(&a[0]));
+//	//printf("%d\n", sizeof(&a[0] + 1));
+//
+//	//char arr[] = { 'a','b','c','d','e','f' };
+//	////printf("%d\n", strlen(arr));
+//	//printf("%lld\n", strlen(&arr[0] + 1)); // [] > * > &
+//
+//	//const char* p = "abcdef";
+//
+//	//int a[3][4] = { 0 };
+//	//printf("%d\n", sizeof(a[0] + 1));
+//
+//	int a[3][4] = { 0 };
+//	printf("%d\n", sizeof(a));			// 48
+//	printf("%d\n", sizeof(a[0][0]));		// 4
+//	printf("%d\n", sizeof(a[0]));		// 16
+//	printf("%d\n", sizeof(a[0] + 1));		// 4/8 (指针)
+//	// 这里a[0] 表示a的首个元素，因为sizeof的特殊所以被当成整个数组大小 +1 后这个特殊就没了
+//	printf("%d\n", sizeof(*(a[0] + 1)));	// 4
+//	printf("%d\n", sizeof(a + 1));			// 4/8
+//	printf("%d\n", sizeof(*(a + 1)));		// 4/8 16
+//	printf("%d\n", sizeof(&a[0] + 1));		// 4/8 
+//	printf("%d\n", sizeof(*(&a[0] + 1)));	// 4 16
+//	printf("%d\n", sizeof(*a));			// 4/8 16
+//	printf("%d\n", sizeof(a[3]));		// 4/8 16
+//	return 0;
+//}
+
+
+//#include <iostream>
+//#include <cassert>
+//
+//using namespace std;
+//
+//namespace kele
+//{
+//	static void* memcpy(void* dest, const void* src, size_t num)
+//	{
+//		assert(dest && src);
+//		char* d = (char*)dest;
+//		const char* s = (const char*)src;
+//		while (num--)
+//		{
+//			*d++ = *s++;
+//		}
+//		return dest;
+//	}
+//
+//	static void* memmove(void* dest, const void* src, size_t num)
+//	{
+//		assert(dest && src);
+//		char* d = (char*)dest;
+//		const char* s = (const char*)src;
+//		while (num--)
+//		{
+//			if (dest < src)
+//			{
+//				*d++ = *s++;
+//			}
+//			else
+//			{
+//				*((char*)(d++ + num)) = *(s++ + num);
+//			}
+//		}
+//		return dest;
+//	}
+//
+//}
+//
+//int main()
+//{
+//
+//
+//	return 0;
+//}
+
+
+//static int Test()
+//{
+//	union test
+//	{
+//		char ch;
+//		int a;
+//	};
+//	test t;
+//	t.a = 1;
+//	return t.ch;
+//}
+//
+//int main()
+//{
+//	// 大小端
+//
+//	int ret = Test();
+//	if (ret == 1)
+//	{
+//		cout << "小端" << endl;
+//	}
+//	else
+//	{
+//		cout << "大端" << endl;
+//	}
+//
+//	return 0;
+//}
+
+
+//class A
+//{
+//public:
+//    void Print()
+//    {
+//        cout << "Print()" << endl;
+//    }
+//private:
+//    int _a;
+//};
+//
+//int main()
+//{
+//    //A a; // 创建一个A类的实例  
+//    A* p = nullptr; // 让指针p指向这个实例  
+//    p->Print(); // 现在可以通过p调用Print函数  
+//    return 0;
+//}
+#include <string>
+
+class Test1
+{
+public:
+	Test1(double log) : _log(log)
+	{}
+
+	Test1(double&& x) // 移动构造
+	{
+		swap(_log, x);
+	}
+private:
+	double _log;
+};
+
+class Test2
+{
+public:
+	Test2(Test1 log) : _log(log)
+	{}
+private:
+	Test1 _log;
+};
+
+class Person
+{
+public:
+	Person(double name = 1.1, int age = 0)
+		:_name(name)
+		, _age(age)
+	{}
+
+	void* operator new(size_t size)
+	{
+
+	}
+
+	void operator delete(void* p)
+	{
+
+	}
+private:
+	Test2 _name;
+	int _age;
+};
 
 int main()
 {
-	//int a[] = { 1,2,3,4 };
-	//printf("%d\n", sizeof(a)); 
-	//printf("%d\n", sizeof(a + 0));
-	//printf("%d\n", sizeof(*a));
-	//printf("%d\n", sizeof(a + 1));
-	//printf("%d\n", sizeof(a[1]));
-	//printf("%d\n", sizeof(&a));
-	//printf("%d\n", sizeof(*&a));
-	//printf("%d\n", sizeof(&a + 1));
-	//printf("%d\n", sizeof(&a[0]));
-	//printf("%d\n", sizeof(&a[0] + 1));
-
-	//char arr[] = { 'a','b','c','d','e','f' };
-	////printf("%d\n", strlen(arr));
-	//printf("%lld\n", strlen(&arr[0] + 1)); // [] > * > &
-
-	//const char* p = "abcdef";
-
-	//int a[3][4] = { 0 };
-	//printf("%d\n", sizeof(a[0] + 1));
-
-	int a[3][4] = { 0 };
-	printf("%d\n", sizeof(a));			// 48
-	printf("%d\n", sizeof(a[0][0]));		// 4
-	printf("%d\n", sizeof(a[0]));		// 16
-	printf("%d\n", sizeof(a[0] + 1));		// 4/8 (指针)
-	// 这里a[0] 表示a的首个元素，因为sizeof的特殊所以被当成整个数组大小 +1 后这个特殊就没了
-	printf("%d\n", sizeof(*(a[0] + 1)));	// 4
-	printf("%d\n", sizeof(a + 1));			// 4/8
-	printf("%d\n", sizeof(*(a + 1)));		// 4/8 16
-	printf("%d\n", sizeof(&a[0] + 1));		// 4/8 
-	printf("%d\n", sizeof(*(&a[0] + 1)));	// 4 16
-	printf("%d\n", sizeof(*a));			// 4/8 16
-	printf("%d\n", sizeof(a[3]));		// 4/8 16
+	Person s1(2.2, 5);
+	Person s2 = s1;
+	Person s3 = std::move(s1);
+	Person s4;
+	s4 = std::move(s2);
 	return 0;
 }
