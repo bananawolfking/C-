@@ -273,59 +273,291 @@ using namespace std;
 //    p->Print(); // 现在可以通过p调用Print函数  
 //    return 0;
 //}
-#include <string>
+//#include <string>
+//
+//class Test1
+//{
+//public:
+//	Test1(double log) : _log(log)
+//	{}
+//
+//	Test1(double&& x) // 移动构造
+//	{
+//		swap(_log, x);
+//	}
+//private:
+//	double _log;
+//};
+//
+//class Test2
+//{
+//public:
+//	Test2(Test1 log) : _log(log)
+//	{}
+//private:
+//	Test1 _log;
+//};
+//
+//class Person
+//{
+//public:
+//	Person(double name = 1.1, int age = 0)
+//		:_name(name)
+//		, _age(age)
+//	{}
+//
+//	void* operator new(size_t size)
+//	{
+//
+//	}
+//
+//	void operator delete(void* p)
+//	{
+//
+//	}
+//private:
+//	Test2 _name;
+//	int _age;
+//};
+//
+//int main()
+//{
+//	Person s1(2.2, 5);
+//	Person s2 = s1;
+//	Person s3 = std::move(s1);
+//	Person s4;
+//	s4 = std::move(s2);
+//	return 0;
+//}
 
-class Test1
-{
-public:
-	Test1(double log) : _log(log)
-	{}
+//namespace kele
+//{
+//	template<class T>
+//	bool less(T a, T b)
+//	{
+//		return a < b;
+//	}
+//
+//	template<>
+//	bool less<int*>(int* a, int* b)
+//	{
+//		return *a < *b;
+//	}
+//
+//	bool less(int* left, int* right)
+//	{
+//		return *left < *right;
+//	}
+//}
+//
+//int main()
+//{
+//	int a = 1;
+//	int b = 2;
+//	cout << kele::less<int>(a, b) << endl; // 显示指定类型
+//	cout << kele::less(&a, &b) << endl; // 显示指定类型
+//
+//	return 0;
+//}
 
-	Test1(double&& x) // 移动构造
-	{
-		swap(_log, x);
-	}
-private:
-	double _log;
-};
+//// 类继承
+//class Person
+//{
+//public:
+//	void print()
+//	{
+//		cout << _name << _age << endl;
+//	}
+//protected:
+//	string _name = "kele";
+//	int _age = 21;
+//};
+//
+//class Student :public Person
+//{
+//public:
+//	void print()
+//	{
+//		cout << _name << _age << _stdid << endl;
+//	}
+//protected:
+//	string _name = "lihua";
+//	int _stdid = 1111;
+//};
+//
+//int main()
+//{
+//	Student s;
+//	s.print();
+//	s.Person::print();//显示访问基类print函数
+//	return 0;
+//}
 
-class Test2
-{
-public:
-	Test2(Test1 log) : _log(log)
-	{}
-private:
-	Test1 _log;
-};
+//class Person
+//{
+//public:
+//	Person(string name, int age)
+//		:_name(name),
+//		_age(age)
+//	{
+//		cout << "Person(string name, int age) 基类构造" << endl;
+//	}
+//
+//	Person(const Person& t): _name(t._name),_age(t._age)
+//	{
+//		cout << "Person(const Person & t) 基类拷贝构造" << endl;
+//	}
+//
+//	Person& operator==(const Person& t)
+//	{
+//		if (this != &t)
+//		{
+//			_name = t._name;
+//			_age = t._age;
+//		}
+//		cout << "Person& operator==(const Person& t) 基类赋值" << endl;
+//		return *this;
+//	}
+//
+//	Person(Person&& t)
+//		:_name(std::forward<std::string>(t._name)),_age(t._age)
+//	{
+//		cout << "Person(Person&& t) 基类移动构造" << endl;
+//	}
+//
+//	Person& operator==(Person&& t)
+//	{
+//		if (this != &t)
+//		{
+//			_name = std::forward<std::string>(t._name);
+//			_age = t._age;
+//		}
+//		cout << "Person& operator==(const Person& t) 基类移动赋值" << endl;
+//		return *this;
+//	}
+//
+//	~Person()
+//	{
+//		cout << "~Person() 基类析构" << endl;
+//	}
+//
+//	void print()
+//	{
+//		cout << _name << endl << _age << endl;
+//	}
+//protected:
+//	string _name;
+//	int _age;
+//};
+//
+//class Student :public Person
+//{
+//public:
+//	Student(string name, int age, int stdid)
+//		:Person(name, age),
+//		_stdid(stdid)
+//	{
+//		cout << "Student(string name, int age, int stdid) 派生类构造" << endl;
+//	}
+//
+//	Student(const Student& s)
+//		:Person(s), // 利用&引用切片
+//		_stdid(s._stdid)
+//	{
+//		cout << "Student(const Student & s) 派生类拷贝构造" << endl;
+//	}
+//
+//	Student& operator==(const Student& s)
+//	{
+//		if (this != &s)
+//		{
+//			Person::operator==(s); // 利用&引用切片
+//			_stdid = s._stdid;
+//		}
+//		cout << "Student& operator==(const Student& s) 派生类赋值" << endl;
+//		return *this;
+//	}
+//
+//	Student(Student&& s):Person(std::forward<Person>(s)), _stdid(s._stdid)
+//	{
+//		cout << "Student(Student&& s) 派生类移动构造" << endl;
+//	}
+//
+//	Student& operator==(Student&& s)
+//	{
+//		if (this != &s)
+//		{
+//			Person::operator==(std::forward<Person>(s)); // 利用&引用切片
+//			_stdid = s._stdid;
+//		}
+//		cout << "Student& operator==(Student&& s) 派生类移动赋值" << endl;
+//		return *this;
+//	}
+//
+//	~Student()
+//	{
+//		cout << "~Student() 派生类析构" << endl;
+//	}
+//
+//	void print()
+//	{
+//		cout << _name << _age << _stdid << endl;
+//	}
+//protected:
+//	int _stdid;
+//};
+//
+//int main()
+//{
+//	Student s("coke", 22, 21);
+//	cout << "-------------------------------------" << endl;
+//	Student s1 = s; // 拷贝构造
+//	cout << "-------------------------------------" << endl;
+//	s == s1;		// 赋值
+//	cout << "-------------------------------------" << endl;
+//	Student s2(move(s));
+//	cout << "-------------------------------------" << endl;
+//	s1 == move(s2);
+//	cout << "-------------------------------------" << endl;
+//
+//	return 0;
+//}
 
 class Person
 {
 public:
-	Person(double name = 1.1, int age = 0)
-		:_name(name)
-		, _age(age)
-	{}
-
-	void* operator new(size_t size)
-	{
-
-	}
-
-	void operator delete(void* p)
-	{
-
-	}
-private:
-	Test2 _name;
-	int _age;
+	string _name; // 姓名
 };
+class Student : virtual public Person
+{
+public:
+	int _num; //学号
+};
+class Teacher : virtual public Person
+{
+public:
+	int _id; // 职工编号
+};
+class Assistant : public Student, public Teacher
+{
+public:
+	string _majorCourse; // 主修课程
+};
+void Test()
+{
+	// 这样会有二义性无法明确知道访问的是哪一个
+	Assistant a;
+	//a._name = "peter";
+	// 需要显示指定访问哪个父类的成员可以解决二义性问题，但是数据冗余问题无法解决
+	a.Student::_name = "xxx";
+	a._id = 1;
+	a.Teacher::_name = "yyy";
+	a._num = 2;
+	a._majorCourse = "kele";
+}
 
 int main()
 {
-	Person s1(2.2, 5);
-	Person s2 = s1;
-	Person s3 = std::move(s1);
-	Person s4;
-	s4 = std::move(s2);
+	Test();
 	return 0;
 }
