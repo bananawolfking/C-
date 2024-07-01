@@ -523,41 +523,226 @@ using namespace std;
 //	return 0;
 //}
 
-class Person
-{
-public:
-	string _name; // 姓名
-};
-class Student : virtual public Person
-{
-public:
-	int _num; //学号
-};
-class Teacher : virtual public Person
-{
-public:
-	int _id; // 职工编号
-};
-class Assistant : public Student, public Teacher
-{
-public:
-	string _majorCourse; // 主修课程
-};
-void Test()
-{
-	// 这样会有二义性无法明确知道访问的是哪一个
-	Assistant a;
-	//a._name = "peter";
-	// 需要显示指定访问哪个父类的成员可以解决二义性问题，但是数据冗余问题无法解决
-	a.Student::_name = "xxx";
-	a._id = 1;
-	a.Teacher::_name = "yyy";
-	a._num = 2;
-	a._majorCourse = "kele";
-}
+//class Person
+//{
+//public:
+//	string _name; // 姓名
+//};
+//class Student : virtual public Person
+//{
+//public:
+//	int _num; //学号
+//};
+//class Teacher : virtual public Person
+//{
+//public:
+//	int _id; // 职工编号
+//};
+//class Assistant : public Student, public Teacher
+//{
+//public:
+//	string _majorCourse; // 主修课程
+//};
+//void Test()
+//{
+//	// 这样会有二义性无法明确知道访问的是哪一个
+//	Assistant a;
+//	//a._name = "peter";
+//	// 需要显示指定访问哪个父类的成员可以解决二义性问题，但是数据冗余问题无法解决
+//	a.Student::_name = "xxx";
+//	a._id = 1;
+//	a.Teacher::_name = "yyy";
+//	a._num = 2;
+//	a._majorCourse = "kele";
+//}
 
-int main()
+//int main()
+//{
+//	Test();
+//	return 0;
+//}
+
+//class B
+//{
+//public:
+//    int ib;
+//    //char cb;
+//public:
+//    B() :ib(0) {}
+//
+//    //virtual void f() { cout << "B::f()" << endl; }
+//    //virtual void Bf() { cout << "B::Bf()" << endl; }
+//};
+//class B1 : virtual public B
+//{
+//public:
+//    int ib1;
+//    char cb1;
+//public:
+//    B1() :ib1(11), cb1('1') {}
+//
+//    //virtual void f() { cout << "B1::f()" << endl; }
+//    //virtual void f1() { cout << "B1::f1()" << endl; }
+//    //virtual void Bf1() { cout << "B1::Bf1()" << endl; }
+//
+//
+//};
+//class B2 : virtual public B
+//{
+//public:
+//    int ib2;
+//    char cb2;
+//public:
+//    B2() :ib2(12), cb2('2') {}
+//
+//    //virtual void f() { cout << "B2::f()" << endl; }
+//    //virtual void f2() { cout << "B2::f2()" << endl; }
+//    //virtual void Bf2() { cout << "B2::Bf2()" << endl; }
+//
+//};
+//
+//class D : public B1, public B2
+//{
+//public:
+//    int id;
+//    char cd;
+//public:
+//    D() :id(100), cd('D') {}
+//
+//    //virtual void f() { cout << "D::f()" << endl; }
+//    //virtual void f1() { cout << "D::f1()" << endl; }
+//    //virtual void f2() { cout << "D::f2()" << endl; }
+//    //virtual void Df() { cout << "D::Df()" << endl; }
+//
+//};
+//
+//int main()
+//{
+//    D d;
+//
+//    int* op = reinterpret_cast<int*>(&d);        //1
+//    int* vbptr = reinterpret_cast<int*>(*op);//2
+//    const int offset = *(vbptr + 1);                         //3
+//
+//    std::cout << offset << endl;
+//
+//    return 0;
+//}
+
+// 多态
+
+//class Person 
+//{
+//public:
+//	virtual void BuyTicket() { cout << "买票-全价" << endl; }
+//};
+//class Student : public Person 
+//{
+//public:
+//	void BuyTicket() { cout << "买票-半价" << endl; }
+//};
+//
+//void Func(Person& p)
+//{
+//	p.BuyTicket();
+//}
+//
+//int main()
+//{
+//	Person ps;
+//	Student st;
+//	Func(ps);
+//	Func(st);
+//	return 0;
+//}
+
+// 抽象类
+
+//class Car
+//{
+//public:
+//	virtual void Drive() = 0;
+//};
+//class Benz :public Car
+//{
+//public:
+//	virtual void Drive()
+//	{
+//		cout << "Benz-舒适" << endl;
+//	}
+//};
+//class BMW :public Car
+//{
+//public:
+//	virtual void Drive()
+//	{
+//		cout << "BMW-操控" << endl;
+//	}
+//};
+//
+//void func(Car* car)
+//{
+//	car->Drive();
+//}
+//
+//void Test()
+//{
+//	Benz* pBenz = new Benz;
+//	BMW* pBMW = new BMW;
+//	func(pBenz);
+//	func(pBMW);
+//}
+//
+//int main()
+//{
+//	Test();
+//	return 0;
+//}
+
+class A {
+public:
+	A(char* s) { cout << s << endl; }
+	~A() {}
+};
+class B :virtual public A
 {
-	Test();
+public:
+	B(char* s1, char* s2) :A(s1) { cout << s2 << endl; }
+};
+class C :virtual public A
+{
+public:
+	C(char* s1, char* s2) :A(s1) { cout << s2 << endl; }
+};
+class D :public B, public C
+{
+public:
+	D(char* s1, char* s2, char* s3, char* s4) :B(s2, s2), C(s3, s3), A(s1)
+	{
+		cout << s4 << endl;
+	}
+};
+int main() {
+	char a[] = "class A";
+	char b[] = "class B";
+	char c[] = "class C";
+	char d[] = "class D";
+
+	D* p = new D(a, b, c, d);
+	delete p;
 	return 0;
 }
+
+//class Base1 { public:  int _b1; };
+//class Base2 { public:  int _b2; };
+//class Derive : public Base1, public Base2 { public: int _d; };
+//int main() {
+//	Derive d;
+//	Base1* p1 = &d;
+//	Base2* p2 = &d;
+//	Derive* p3 = &d;
+//	cout << p1 << endl;
+//	cout << p2 << endl;
+//	cout << p3 << endl;
+//	return 0;
+//}
