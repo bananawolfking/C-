@@ -699,39 +699,39 @@ using namespace std;
 //	return 0;
 //}
 
-class A {
-public:
-	A(char* s) { cout << s << endl; }
-	~A() {}
-};
-class B :virtual public A
-{
-public:
-	B(char* s1, char* s2) :A(s1) { cout << s2 << endl; }
-};
-class C :virtual public A
-{
-public:
-	C(char* s1, char* s2) :A(s1) { cout << s2 << endl; }
-};
-class D :public B, public C
-{
-public:
-	D(char* s1, char* s2, char* s3, char* s4) :B(s2, s2), C(s3, s3), A(s1)
-	{
-		cout << s4 << endl;
-	}
-};
-int main() {
-	char a[] = "class A";
-	char b[] = "class B";
-	char c[] = "class C";
-	char d[] = "class D";
-
-	D* p = new D(a, b, c, d);
-	delete p;
-	return 0;
-}
+//class A {
+//public:
+//	A(char* s) { cout << s << endl; }
+//	~A() {}
+//};
+//class B :virtual public A
+//{
+//public:
+//	B(char* s1, char* s2) :A(s1) { cout << s2 << endl; }
+//};
+//class C :virtual public A
+//{
+//public:
+//	C(char* s1, char* s2) :A(s1) { cout << s2 << endl; }
+//};
+//class D :public B, public C
+//{
+//public:
+//	D(char* s1, char* s2, char* s3, char* s4) :B(s2, s2), C(s3, s3), A(s1)
+//	{
+//		cout << s4 << endl;
+//	}
+//};
+//int main() {
+//	char a[] = "class A";
+//	char b[] = "class B";
+//	char c[] = "class C";
+//	char d[] = "class D";
+//
+//	D* p = new D(a, b, c, d);
+//	delete p;
+//	return 0;
+//}
 
 //class Base1 { public:  int _b1; };
 //class Base2 { public:  int _b2; };
@@ -746,3 +746,279 @@ int main() {
 //	cout << p3 << endl;
 //	return 0;
 //}
+
+#include <vector>
+
+//int main()
+//{
+//	vector<int> v = { 1,2,3,4,5 };
+//	for (auto e : v)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	auto it = v.begin();
+//	while (it != v.end())
+//	{
+//		cout << *it << " ";
+//		++it;
+//	}
+//	cout << endl;
+//
+//	return 0;
+//}
+//// 右值引用
+//
+//int main()
+//{
+//	int _x = 1;
+//	int _y = 2;
+//	int& rx = _x;
+//	int& ry = _y;
+//	cout << &_x << endl;
+//	cout << &rx << endl;
+//	cout << &_y << endl;
+//	cout << &ry << endl;
+//
+//
+//	double x = 1.1, y = 2.2;
+//	// 以下几个都是常见的右值
+//	10;
+//	x + y;
+//	fmin(x, y);
+//	// 以下几个都是对右值的右值引用
+//	int&& rr1 = 10;
+//	double&& rr2 = x + y;
+//	double&& rr3 = fmin(x, y);
+//	// 这里编译会报错：error C2106: “=”: 左操作数必须为左值
+//	//10 = 1;
+//	//x + y = 1;
+//	//fmin(x, y) = 1;
+//	cout << &x << endl;
+//	cout << &rr1 << endl; // 栈上
+//	cout << &rr2 << endl;
+//	cout << &rr3 << endl;
+//	rr1++;
+//
+//	const int& _rr1 = 10;
+//	const double& _rr2 = x + y;
+//	const double& _rr3 = fmin(x, y);
+//
+//	cout << &_rr1 << endl; // 栈上
+//	cout << &_rr2 << endl;
+//	cout << &_rr3 << endl;
+//
+//	return 0;
+//}
+
+
+// lambda
+//int y = 0;
+//
+//int main()
+//{
+//	auto lambda_add = [](int x, int y)->int {return x + y; };
+//	cout << typeid(lambda_add).name() << endl;
+//
+//	return 0;
+//}
+
+
+
+
+//指向类成员函数的函数指针
+//#include <iostream>
+//#include <cstdio>
+//using namespace std;
+//
+//class A
+//{
+//public:
+//    A(int aa = 0) :a(aa) {}
+//
+//    ~A() {}
+//
+//    void setA(int aa = 1)
+//    {
+//        a = aa;
+//    }
+//
+//    virtual void print()
+//    {
+//        cout << "A: " << a << endl;
+//    }
+//
+//    virtual void printa()
+//    {
+//        cout << "A1: " << a << endl;
+//    }
+//private:
+//    int a;
+//};
+//
+//class B :public A
+//{
+//public:
+//    B() :A(), b(0) {}
+//
+//    B(int aa, int bb) :A(aa), b(bb) {}
+//
+//    ~B() {}
+//
+//    virtual void print()
+//    {
+//        A::print();
+//        cout << "B: " << b << endl;
+//    }
+//
+//    virtual void printa()
+//    {
+//        A::printa();
+//        cout << "B: " << b << endl;
+//    }
+//private:
+//    int b;
+//};
+//
+//int main(void)
+//{
+//    A a;
+//    B b;
+//    void (A:: * ptr)(int) = &A::setA;
+//    A* pa = &a;
+//
+//    //对于非虚函数，返回其在内存的真实地址
+//    printf("A::set(): %p\n", &A::setA);
+//    //对于虚函数， 返回其在虚函数表的偏移位置
+//    printf("B::print(): %p\n", &A::print);
+//    printf("B::print(): %p\n", &A::printa);
+//
+//    a.print();
+//
+//    a.setA(10);
+//
+//    a.print();
+//
+//    a.setA(100);
+//
+//    a.print();
+//    //对于指向类成员函数的函数指针，引用时必须传入一个类对象的this指针，所以必须由类实体调用
+//    (pa->*ptr)(1000);
+//
+//    a.print();
+//
+//    (a.*ptr)(10000);
+//
+//    a.print();
+//    return 0;
+//}
+
+
+//// bind example
+//#include <iostream>     // std::cout
+//#include <functional>   // std::bind
+//
+//// a function: (also works with function object: std::divides<double> my_divide;)
+//double my_divide(double x, double y) { return x / y; }
+//
+//struct MyPair {
+//	MyPair(double _a, double _b):a(_a),b(_b)
+//	{}
+//	double a, b;
+//	double multiply() { return a * b; }
+//};
+//
+//int main() {
+//	using namespace std::placeholders;    // adds visibility of _1, _2, _3,...
+//
+//	// binding functions:
+//	auto fn_five = std::bind(my_divide, 10, 2);               // returns 10/2
+//	std::cout << fn_five() << '\n';                          // 5
+//
+//	auto fn_half = std::bind(my_divide, _1, 2);               // returns x/2
+//	std::cout << fn_half(10) << '\n';                        // 5
+//
+//	auto fn_invert = std::bind(my_divide, _2, _1);            // returns y/x
+//	std::cout << fn_invert(10, 2) << '\n';                    // 0.2
+//
+//	auto fn_rounding = std::bind<int>(my_divide, _1, _2);     // returns int(x/y)
+//	std::cout << fn_rounding(10, 3) << '\n';                  // 3
+//
+//	MyPair ten_two{ 10,2 };
+//
+//	// binding members:
+//	//auto bound_member_fn = std::bind(&MyPair::multiply, _1); // returns x.multiply()
+//	//std::cout << bound_member_fn(ten_two) << '\n';           // 20
+//
+//	//auto bound_member_data = std::bind(&MyPair::a, ten_two); // returns ten_two.a
+//	//std::cout << bound_member_data() << '\n';                // 10
+//
+//	std::cout << typeid(&MyPair::a).name() << endl;
+//
+//	std::function<double(MyPair)> func = &MyPair::a;
+//
+//
+//	std::cout << func(MyPair(10,2)) << endl;
+//
+//
+//	return 0;
+//}
+
+
+//#include <thread>
+//
+//void func()
+//{
+//	cout << this_thread::get_id();
+//}
+//
+//int main()
+//{
+//	cout << this_thread::get_id() << endl;
+//	thread th(func);
+//	th.join();
+//	return 0;
+//}
+
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+void two_thread_print()
+{
+	std::mutex mtx;
+	condition_variable c;
+	int n = 100;
+	bool flag = true;
+	thread t1([&]() {
+		int i = 0;
+		while (i < n)
+		{
+			unique_lock<mutex> lock(mtx);
+			c.wait(lock, [&]()->bool {return flag; });
+			cout << i << endl;
+			flag = false;
+			i += 2; // 偶数
+			c.notify_one();
+		}
+	});
+	thread t2([&]() {
+		int j = 1;
+		while (j < n)
+		{
+			unique_lock<mutex> lock(mtx);
+			c.wait(lock, [&]()->bool {return !flag; });
+			cout << j << endl;
+			j += 2; // 奇数
+			flag = true;
+			c.notify_one();
+		}
+	});
+	t1.join();
+	t2.join();
+}
+int main()
+{
+	two_thread_print();
+	return 0;
+}
