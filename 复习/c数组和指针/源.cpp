@@ -981,44 +981,191 @@ using namespace std;
 //	return 0;
 //}
 
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-void two_thread_print()
-{
-	std::mutex mtx;
-	condition_variable c;
-	int n = 100;
-	bool flag = true;
-	thread t1([&]() {
-		int i = 0;
-		while (i < n)
-		{
-			unique_lock<mutex> lock(mtx);
-			c.wait(lock, [&]()->bool {return flag; });
-			cout << i << endl;
-			flag = false;
-			i += 2; // 偶数
-			c.notify_one();
-		}
-	});
-	thread t2([&]() {
-		int j = 1;
-		while (j < n)
-		{
-			unique_lock<mutex> lock(mtx);
-			c.wait(lock, [&]()->bool {return !flag; });
-			cout << j << endl;
-			j += 2; // 奇数
-			flag = true;
-			c.notify_one();
-		}
-	});
-	t1.join();
-	t2.join();
-}
+//#include <thread>
+//#include <mutex>
+//#include <condition_variable>
+//void two_thread_print()
+//{
+//	std::mutex mtx;
+//	condition_variable c;
+//	int n = 100;
+//	bool flag = true;
+//	thread t1([&]() {
+//		int i = 0;
+//		while (i < n)
+//		{
+//			unique_lock<mutex> lock(mtx);
+//			c.wait(lock, [&]()->bool {return flag; });
+//			cout << i << endl;
+//			flag = false;
+//			i += 2; // 偶数
+//			c.notify_one();
+//		}
+//	});
+//	thread t2([&]() {
+//		int j = 1;
+//		while (j < n)
+//		{
+//			unique_lock<mutex> lock(mtx);
+//			c.wait(lock, [&]()->bool {return !flag; });
+//			cout << j << endl;
+//			j += 2; // 奇数
+//			flag = true;
+//			c.notify_one();
+//		}
+//	});
+//	t1.join();
+//	t2.join();
+//}
+//int main()
+//{
+//	two_thread_print();
+//	return 0;
+//}
+
+
+
+//double Division(int a, int b)
+//{
+//	// 当b == 0时抛出异常
+//	if (b == 0)
+//	{
+//		throw "Division by zero condition!";
+//	}
+//	return (double)a / (double)b;
+//}
+//void Func()
+//{
+//	// 这里可以看到如果发生除0错误抛出异常，另外下面的array没有得到释放。
+//   // 所以这里捕获异常后并不处理异常，异常还是交给外面处理，这里捕获了再
+//   // 重新抛出去。
+//	int* array = new int[10];
+//	try {
+//		int len, time;
+//		cin >> len >> time;
+//		cout << Division(len, time) << endl;
+//	}
+//	catch (...)
+//	{
+//		cout << "delete []" << array << endl;
+//		delete[] array;
+//		throw;
+//	}
+//	// ...
+//	cout << "delete []" << array << endl;
+//	delete[] array;
+//}
+//int main()
+//{
+//	try
+//	{
+//		Func();
+//	}
+//	catch (const char* errmsg)
+//	{
+//		cout << errmsg << endl;
+//	}
+//	return 0;
+//}
+
+//#include <memory>
+//
+//int main()
+//{
+//	unique_ptr<int> ptr1(new int(1));
+//	unique_ptr<int> ptr2 = move(ptr1);
+//
+//
+//	return 0;
+//}
+
+#include "./smartptr.h"
+
+//namespace kele
+//{
+//	struct data
+//	{
+//		int a = 0;
+//		double b = 1.1;
+//	};
+//}
+
+//int main()
+//{
+//	//kele::auto_ptr<int> ptr1(new int(1));
+//	//cout << *ptr1 << endl;
+//
+//	//auto ptr3 = ptr1;
+//	//kele::auto_ptr<kele::data> ptr2(new kele::data);
+//
+//	//cout << ptr2->a << ptr2->b << endl;
+//
+//	//{
+//	//	kele::unique_ptr<kele::data> ptr1(new kele::data[5], [](kele::data* ptr) {delete[] ptr; });
+//	//	auto ptr2 = move(ptr1);
+//	//}
+//
+//	//kele::shared_ptr<kele::data> ptr1(new kele::data[5], [](kele::data* ptr) {
+//	//	cout << "delete[]" << endl;
+//	//	delete[] ptr; 
+//	//});
+//	//auto ptr2 = move(ptr1);
+//
+//	return 0;
+//}
+
+//namespace kele
+//{
+//	struct data
+//	{
+//		int a = 0;
+//		kele::weak_ptr<kele::data> next = nullptr;
+//		kele::weak_ptr<kele::data> prev = nullptr;
+//	};
+//}
+//
+//int main()
+//{
+//	kele::shared_ptr<kele::data> ptr1(new kele::data);
+//	kele::shared_ptr<kele::data> ptr2(new kele::data);
+//
+//	ptr1->next = ptr2;
+//	ptr2->next = ptr1;
+//
+//	return 0;
+//}
+
+
+//class A
+//{
+//public:
+//	virtual void f() {}
+//};
+//class B : public A
+//{};
+//void fun(A* pa)
+//{
+//	// dynamic_cast会先检查是否能转换成功，能成功则转换，不能则返回
+//	B* pb1 = static_cast<B*>(pa);
+//	B* pb2 = dynamic_cast<B*>(pa);
+//	cout << "pb1:" << pb1 << endl;
+//	cout << "pb2:" << pb2 << endl;
+//}
+//int main()
+//{
+//	A a;
+//	B b;
+//	fun(&a);
+//	fun(&b);
+//	return 0;
+//}
+
 int main()
 {
-	two_thread_print();
+	int a = 12;
+	// 这里使用static_cast会报错，应该使用reinterpret_cast
+	//int *p = static_cast<int*>(a);
+	int* p = reinterpret_cast<int*>(a);
+	cout << p << endl;
 	return 0;
 }
