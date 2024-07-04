@@ -1118,7 +1118,7 @@ int main()
 
 **多继承派生类的未重写的虚函数 放在 第一个继承基类部分的虚函数表（第一个虚表） 的最后**
 
-![](.\img\多继承关系的虚函数表.png)
+![](https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E5%A4%9A%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%E7%9A%84%E8%99%9A%E5%87%BD%E6%95%B0%E8%A1%A8.png)
 
 ---
 
