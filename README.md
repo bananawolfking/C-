@@ -763,7 +763,7 @@ int main()
 
 _name在Assistant的对象中Person成员会有两份
 
-<img src="https://gitee.com/bananawolfking/cplusplus-learning/blob/master/img/菱形继承2.png" alt = "菱形继承" style="zoom:60%;" />
+<img src="https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E8%8F%B1%E5%BD%A2%E7%BB%A7%E6%89%BF2.png" alt = "菱形继承" style="zoom:60%;" />
 
 ```cc
 class Person
@@ -803,7 +803,7 @@ int main()
 }
 ```
 
-<img src=".\img\菱形继承内存图.png"  />
+<img src="https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E8%8F%B1%E5%BD%A2%E7%BB%A7%E6%89%BF%E5%86%85%E5%AD%98%E5%9B%BE.png"  />
 
 **虚拟继承可以解决菱形继承的二义性和数据冗余的问题。**
 
@@ -811,9 +811,9 @@ int main()
 
 在基础重复的基类时 virtual 继承
 
-<img src=".\img\虚继承.png" style="zoom: 80%;" />
+<img src="https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E8%99%9A%E7%BB%A7%E6%89%BF.png" style="zoom: 80%;" />
 
-<img src=".\img\虚继承内存结构.png"  />
+<img src="https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E8%99%9A%E7%BB%A7%E6%89%BF%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.png"  />
 
 
 
@@ -974,7 +974,7 @@ int main()
 
 ### 重载、覆盖(重写)、隐藏(重定义)的对比
 
-![](.\img\重载、覆盖(重写)、隐藏(重定义)的对比.png)
+![](https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E9%87%8D%E8%BD%BD%E3%80%81%E8%A6%86%E7%9B%96(%E9%87%8D%E5%86%99)%E3%80%81%E9%9A%90%E8%97%8F(%E9%87%8D%E5%AE%9A%E4%B9%89)%E7%9A%84%E5%AF%B9%E6%AF%94.png)
 
 ### override/final
 
@@ -1102,7 +1102,7 @@ int main()
 }
 ```
 
-<img src=".\img\虚函数表.png" style="zoom:67%;" />
+<img src="https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E8%99%9A%E5%87%BD%E6%95%B0%E8%A1%A8.png" style="zoom:67%;" />
 
 **动态绑定与静态绑定**
 
@@ -1234,7 +1234,7 @@ int main()
 
 > B->1
 
-![](.\img\接口继承参数问题.png)
+![](https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E6%8E%A5%E5%8F%A3%E7%BB%A7%E6%89%BF%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98.png)
 
 问答：
 
@@ -1409,7 +1409,7 @@ int main()
 
 例如： string operator+(const string& str)
 
-<img src=".\img\移动构造.png" style="zoom: 80%;" />
+<img src="https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0.png" style="zoom: 80%;" />
 
 传值返回就会导致，两次拷贝构造，在编译器优化后可能会优化掉第一次的拷贝构造，但是返回值做为参数的拷贝构造是少不了的
 
@@ -2489,7 +2489,7 @@ namespace kele
 
 ### 什么是循环引用？怎么解决？
 
-<img src=".\img\循环引用.png" style="zoom:80%;" />
+<img src="https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8.png" style="zoom:80%;" />
 
 因为节点内部的两个shared_ptr引用计数变成了2，在delete的时候，引用计数不会减到0，导致内存泄漏
 
