@@ -2622,7 +2622,7 @@ C++通过以下方式来支持RTTI：
 
 ### 接口
 
-![](.\img\C++IO.png)
+![](https://gitee.com/bananawolfking/cplusplus-learning/raw/master/img/C++IO.png)
 
 功能对应关系
 
