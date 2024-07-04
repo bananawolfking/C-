@@ -757,13 +757,13 @@ int main()
 
 菱形继承：
 
-<img src="E:\markdown\img\菱形继承.png" alt="菱形继承" style="zoom:60%;" />
+<img src=".\img\菱形继承.png" alt="菱形继承" style="zoom:60%;" />
 
 菱形继承的问题：从下面的对象成员模型构造，可以看出**菱形继承有数据冗余和二义性的问题**。
 
 _name在Assistant的对象中Person成员会有两份
 
-<img src="E:\markdown\img\菱形继承2.png" alt = "菱形继承" style="zoom:60%;" />
+<img src=".\img\菱形继承2.png" alt = "菱形继承" style="zoom:60%;" />
 
 ```cc
 class Person
