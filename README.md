@@ -757,13 +757,13 @@ int main()
 
 菱形继承：
 
-<img src="E:\markdown\img\菱形继承.png" alt="菱形继承" style="zoom:60%;" />
+<img src=".\img\菱形继承.png" alt="菱形继承" style="zoom:60%;" />
 
 菱形继承的问题：从下面的对象成员模型构造，可以看出**菱形继承有数据冗余和二义性的问题**。
 
 _name在Assistant的对象中Person成员会有两份
 
-<img src="E:\markdown\img\菱形继承2.png" alt = "菱形继承" style="zoom:60%;" />
+<img src=".\img\菱形继承2.png" alt = "菱形继承" style="zoom:60%;" />
 
 ```cc
 class Person
@@ -803,7 +803,7 @@ int main()
 }
 ```
 
-<img src="E:\markdown\img\菱形继承内存图.png"  />
+<img src=".\img\菱形继承内存图.png"  />
 
 **虚拟继承可以解决菱形继承的二义性和数据冗余的问题。**
 
@@ -811,9 +811,9 @@ int main()
 
 在基础重复的基类时 virtual 继承
 
-<img src="E:\markdown\img\虚继承.png" style="zoom: 80%;" />
+<img src=".\img\虚继承.png" style="zoom: 80%;" />
 
-<img src="E:\markdown\img\虚继承内存结构.png"  />
+<img src=".\img\虚继承内存结构.png"  />
 
 
 
@@ -974,7 +974,7 @@ int main()
 
 ### 重载、覆盖(重写)、隐藏(重定义)的对比
 
-![](E:\markdown\img\重载、覆盖(重写)、隐藏(重定义)的对比.png)
+![](.\img\重载、覆盖(重写)、隐藏(重定义)的对比.png)
 
 ### override/final
 
@@ -1102,7 +1102,7 @@ int main()
 }
 ```
 
-<img src="E:\markdown\img\虚函数表.png" style="zoom:67%;" />
+<img src=".\img\虚函数表.png" style="zoom:67%;" />
 
 **动态绑定与静态绑定**
 
@@ -1118,7 +1118,7 @@ int main()
 
 **多继承派生类的未重写的虚函数 放在 第一个继承基类部分的虚函数表（第一个虚表） 的最后**
 
-![](E:\markdown\img\多继承关系的虚函数表.png)
+![](.\img\多继承关系的虚函数表.png)
 
 ---
 
@@ -1234,7 +1234,7 @@ int main()
 
 > B->1
 
-![](E:\markdown\img\接口继承参数问题.png)
+![](.\img\接口继承参数问题.png)
 
 问答：
 
@@ -1409,7 +1409,7 @@ int main()
 
 例如： string operator+(const string& str)
 
-<img src="E:\markdown\img\移动构造.png" style="zoom: 80%;" />
+<img src=".\img\移动构造.png" style="zoom: 80%;" />
 
 传值返回就会导致，两次拷贝构造，在编译器优化后可能会优化掉第一次的拷贝构造，但是返回值做为参数的拷贝构造是少不了的
 
@@ -2489,7 +2489,7 @@ namespace kele
 
 ### 什么是循环引用？怎么解决？
 
-<img src="E:\markdown\img\循环引用.png" style="zoom:80%;" />
+<img src=".\img\循环引用.png" style="zoom:80%;" />
 
 因为节点内部的两个shared_ptr引用计数变成了2，在delete的时候，引用计数不会减到0，导致内存泄漏
 
@@ -2622,7 +2622,7 @@ C++通过以下方式来支持RTTI：
 
 ### 接口
 
-![](E:\markdown\img\C++IO.png)
+![](.\img\C++IO.png)
 
 功能对应关系
 
