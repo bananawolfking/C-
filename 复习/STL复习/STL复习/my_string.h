@@ -39,12 +39,13 @@ namespace kele
 
 		string& operator+=(const string& str)
 		{
-			size_t sz = strlen(str.c_str());
+			size_t sz = str._size;
 			if (sz + _size + 1 > _capacity)
 			{
-				reserve(_capacity * 2);
+				reserve(sz > _capacity ? _capacity + sz : 2 * _capacity);
 			}
 			strcpy(_str + _size, str.c_str());
+			_size += sz;
 			return *this;
 		}
 
@@ -77,6 +78,11 @@ namespace kele
 			return _str;
 		}
 
+		size_t size() const
+		{
+			return _size;
+		}
+
 	private:
 		char* _str;
 		size_t _size;
@@ -86,11 +92,6 @@ namespace kele
 	};
 
 	size_t string::npos = -1;
-
-	//ostream& operator<<(ostream& out, const string& str)
-	//{
-
-	//}
 
 	std::ostream& operator << (std::ostream& out, const string& d)
 	{
