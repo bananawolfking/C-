@@ -114,7 +114,11 @@ namespace kele
 
 		size_t size() const { return _finish - _start; }
 		size_t capacity() const { return _end - _start; }
-
+		T& back() { return *(_finish - 1); }
+		const T& back() const { return *(_finish - 1); }
+		T& front() { return *_start; }
+		const T& front() const { return *_start; }
+		bool empty() const { return _start == _finish; }
 
 	private:
 		iterator _start;

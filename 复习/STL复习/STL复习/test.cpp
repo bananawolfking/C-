@@ -136,51 +136,100 @@ using namespace std;
 //	node* _head;
 //};
 
-#include "my_list.h"
+//#include "my_list.h"
+//
+//int main()
+//{
+//	kele::list<int> lt;
+//	auto it = lt.begin();
+//	lt.insert(it, 1);
+//
+//	auto begin = lt.begin();
+//	auto end = lt.end();
+//
+//	for (auto& e : lt)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	lt.push_back(3);
+//	for (auto& e : lt)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	lt.push_front(2);
+//	for (auto& e : lt)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	lt.pop_back();
+//	for (auto& e : lt)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	lt.pop_front();
+//	for (auto& e : lt)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//
+//	return 0;
+//}
+
+#include "my_stack.h"
+#include "my_queue.h"
+
+
+//int main()
+//{
+//	kele::stack<int> st;
+//	int arr[] = { 1,2,3,4,5 };
+//	for (int e : arr)
+//	{
+//		st.push(e);
+//	}
+//
+//	while (!st.empty())
+//	{
+//		cout << st.top() << " ";
+//		st.pop();
+//	}
+//	cout << endl;
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	kele::queue<int> st;
+//	int arr[] = { 1,2,3,4,5 };
+//	for (int e : arr)
+//	{
+//		st.push(e);
+//	}
+//
+//	while (!st.empty())
+//	{
+//		cout << st.front() << " ";
+//		st.pop();
+//	}
+//	cout << endl;
+//
+//	return 0;
+//}
+
 
 int main()
 {
-	kele::list<int> lt;
-	auto it = lt.begin();
-	lt.insert(it, 1);
 
-	auto begin = lt.begin();
-	auto end = lt.end();
-
-	for (auto& e : lt)
-	{
-		cout << e << " ";
-	}
-	cout << endl;
-
-	lt.push_back(3);
-	for (auto& e : lt)
-	{
-		cout << e << " ";
-	}
-	cout << endl;
-
-	lt.push_front(2);
-	for (auto& e : lt)
-	{
-		cout << e << " ";
-	}
-	cout << endl;
-
-	lt.pop_back();
-	for (auto& e : lt)
-	{
-		cout << e << " ";
-	}
-	cout << endl;
-
-	lt.pop_front();
-	for (auto& e : lt)
-	{
-		cout << e << " ";
-	}
-	cout << endl;
-
-
-	return 0;
 }
+

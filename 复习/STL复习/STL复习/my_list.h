@@ -92,6 +92,11 @@ namespace kele
 		void pop_back(){erase(_head->_prev); }
 		void pop_front(){erase(begin()); }
 
+		T& back() { return _head->_prev->_val; }
+		const T& back() const { return _head->_prev->_val; }
+		T& front() { return _head->_next->_val; }
+		const T& front() const { return _head->_next->_val; }
+
 		bool empty() const
 		{
 			return _size == 0;
